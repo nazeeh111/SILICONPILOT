@@ -1,0 +1,290 @@
+{
+  "schema_version": 1,
+  "candidates": 40,
+  "verified_and_routed": 40,
+  "corpus_sha256": "29b8df9f8a45749c0e33e47b32e27aa9a0a1adcc035d62620cfe90ae0eceab9e",
+  "protocol_refresh": true,
+  "checks": [
+    {
+      "id": "w12-c00",
+      "rtl_sha256": "21618edf8a4bb392ebd1bab105f16bb9033307524afc4f2d03f2b25b778d0b25",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 73
+    },
+    {
+      "id": "w12-c03",
+      "rtl_sha256": "3a799bd20ea57d46abfe4f71259f77abce53258c033f5ef259726a3f50ab5da1",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 73
+    },
+    {
+      "id": "w12-c06",
+      "rtl_sha256": "73af9ca659f8e31414d5f9e139d76ea47913e57383557d558a0bbc0ae4f31f62",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 73
+    },
+    {
+      "id": "w12-c09",
+      "rtl_sha256": "1af1fc88b1513a06b5a290101b40ade461d46fd4f9511f99ce88836cb2b4353e",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 73
+    },
+    {
+      "id": "w12-c12",
+      "rtl_sha256": "e502ee6a330cecc58420718ab5012678ccadf993a37e1cf767561ee1d01dcbfa",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 73
+    },
+    {
+      "id": "w12-c15",
+      "rtl_sha256": "2bf0d4fda7ac7d400bafb456f81778a9e06def9a90421a7191c22a45a5226fbd",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 73
+    },
+    {
+      "id": "w12-c18",
+      "rtl_sha256": "1d8c3482a8dfd13a52d62a23838897129e067c6e4df7c2701ca8dee5d4d3acd0",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 74
+    },
+    {
+      "id": "w12-c21",
+      "rtl_sha256": "2e0f4616ca5a7a1b28b63c06aab1e0f9932b086eb2887721de96525a31b531c4",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 20
+    },
+    {
+      "id": "w4-c00",
+      "rtl_sha256": "246d5ade007c4305a91a525d65cc50d33ef070fb71b540c2da84da8265eecc44",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 25
+    },
+    {
+      "id": "w4-c03",
+      "rtl_sha256": "4b6ed2a626fb6a5177ede3014cf793e6b79d098a18a1a0be5187d480f316ceda",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 25
+    },
+    {
+      "id": "w4-c06",
+      "rtl_sha256": "e1312f1472bcffa060d49a7cc1d6e74388f52210c2e1f22dd4046cf50c5adec7",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 25
+    },
+    {
+      "id": "w4-c09",
+      "rtl_sha256": "259b52980ed3301a24761e63640ddc2f055b9034344d8913473593c82bfd5733",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 25
+    },
+    {
+      "id": "w4-c12",
+      "rtl_sha256": "a6aa85db50fc99f90cf2865832f60fb98e33bdedff9b1c1b7beb95e8ebe507fe",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 25
+    },
+    {
+      "id": "w4-c15",
+      "rtl_sha256": "eb97cbeec4d1a10dd7d0cafc2824d42833e024b33a4b9dad84c56e4ff13c3f46",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 25
+    },
+    {
+      "id": "w4-c18",
+      "rtl_sha256": "44465f6ef81f877fe6ddf9c6a1fbb71ad0f64819c8f7ccc90362377764348fe8",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 26
+    },
+    {
+      "id": "w4-c21",
+      "rtl_sha256": "9d6999dc5bc5fe6c081db11ea1cd4098890e1d25d77566920b4c3abcd941e202",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 8
+    },
+    {
+      "id": "w8-c00",
+      "rtl_sha256": "0e9fb3ac5794481d4a5e39c1b7618187212f7e3bcd71c7e237f4513f5776187e",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 49
+    },
+    {
+      "id": "w8-c01",
+      "rtl_sha256": "a5bf6dc31db0ade2f39a90c1f96653c44f6125c61a718eaa9c5cd4c9b2344902",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 97
+    },
+    {
+      "id": "w8-c02",
+      "rtl_sha256": "22b68ba7c86dd19810ccd7768f573671c4278a360c31d0972637449785e4b45d",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 25
+    },
+    {
+      "id": "w8-c03",
+      "rtl_sha256": "f904105fb06dcf09ef7c1a7f40f0a9caa4ea12f7b12466844110ff68d937790c",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 49
+    },
+    {
+      "id": "w8-c04",
+      "rtl_sha256": "14bd0517fe9a19264df80952b94a7429f1246a50040217ecb9de6065f57d10a0",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 13
+    },
+    {
+      "id": "w8-c05",
+      "rtl_sha256": "bc128bfcddce5c25701a2e85f187c716cff732312aaacad2d0c6c7dd5a554ded",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 25
+    },
+    {
+      "id": "w8-c06",
+      "rtl_sha256": "dedc4593b3e99a0040fb3a93d887f39ebee3df7bb5798beaf2c76008b23da0de",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 49
+    },
+    {
+      "id": "w8-c07",
+      "rtl_sha256": "2f8590678ffe2350d6f30ca763cbbe31aa1c0e8988ffb286f2d37e31255cb6dc",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 97
+    },
+    {
+      "id": "w8-c08",
+      "rtl_sha256": "b2072b5b3250d1f457f535f3b75bfd0b7cd7fe3a4999c518993df1126055ce89",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 25
+    },
+    {
+      "id": "w8-c09",
+      "rtl_sha256": "498bc2efc060d6022b3f642653ed555265a1976aeda5042a98511f171925194a",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 49
+    },
+    {
+      "id": "w8-c10",
+      "rtl_sha256": "fcd30f31eae7a7b010e8e5a2d0928b73e607390cb30bb4663afb196e0ee64a41",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 13
+    },
+    {
+      "id": "w8-c11",
+      "rtl_sha256": "9981a80994a9e185d75dae9f177184e06c208b4bdf07729a8ef5f95fcd256496",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 25
+    },
+    {
+      "id": "w8-c12",
+      "rtl_sha256": "e4cf0ed5bb1cbbfcb3a070bc98fd0541d17f80541cc163f9ccee55a451c6c13b",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 49
+    },
+    {
+      "id": "w8-c13",
+      "rtl_sha256": "baab3ff97a068d27eefaf6232bc04e1e3be505a45b4a108a81ca7525f944df55",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 97
+    },
+    {
+      "id": "w8-c14",
+      "rtl_sha256": "9b36186a908c3a89ee79c67eea7031175caa0b36a8af2bcabf046caeb7461aa0",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 25
+    },
+    {
+      "id": "w8-c15",
+      "rtl_sha256": "768675ed07ec4b80c2a196666786247ce84c69baf66ebd07fa66ffbc61ee91ad",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 49
+    },
+    {
+      "id": "w8-c16",
+      "rtl_sha256": "6e8d72e48171537a85af2e80ff201ec687124b4625f7f312b12d65c7dd46dc57",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 13
+    },
+    {
+      "id": "w8-c17",
+      "rtl_sha256": "39b2aaefe8e767631146138daf25a2aca3101c34461538eb7f0a4669d12a7299",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 25
+    },
+    {
+      "id": "w8-c18",
+      "rtl_sha256": "a8f92c38339926f3de293296c93175d2efb894d62200db19594376801666c32a",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 50
+    },
+    {
+      "id": "w8-c19",
+      "rtl_sha256": "54ab96cbe76cfeaac1ff085307d5056cab9f95358b561d09aa05c6b1fca4c41b",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 14
+    },
+    {
+      "id": "w8-c20",
+      "rtl_sha256": "9519b6de02b5b05207d93aaec7d220ee46b70d03669c1fd08ce5a7e5eca4717a",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 50
+    },
+    {
+      "id": "w8-c21",
+      "rtl_sha256": "18b1d792577c8f8dc43a81ce18951a93f2d8b84201a2037a02083eea52e93dce",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 14
+    },
+    {
+      "id": "w8-c22",
+      "rtl_sha256": "a01bf01d0a43f57a091ed73296920e4383e2884d3c8c6ccc5714341ee72c9d90",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 50
+    },
+    {
+      "id": "w8-c23",
+      "rtl_sha256": "f3c29659a1580bef5636d0a2a37fcc8fd70aedd5fe75919d4081afe64f9ffdd3",
+      "samples": 353,
+      "artifact_digests_checked": 12,
+      "latency_cycles": 14
+    }
+  ],
+  "scope": "RTL verification linked by digest to synthesized/routed artifacts. No claim of DSP mapped netlist equivalence or physical hardware testing."
+}

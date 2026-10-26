@@ -1,0 +1,70 @@
+{
+  "name": "banknote_4x4x2",
+  "input_size": 4,
+  "layers": [
+    {
+      "weights": [
+        [
+          46,
+          48,
+          62,
+          -8
+        ],
+        [
+          45,
+          48,
+          60,
+          -7
+        ],
+        [
+          -25,
+          -12,
+          31,
+          11
+        ],
+        [
+          0,
+          -1,
+          1,
+          0
+        ]
+      ],
+      "bias": [
+        1075,
+        1123,
+        -408,
+        -2560
+      ],
+      "relu": true
+    },
+    {
+      "weights": [
+        [
+          1,
+          20,
+          -12,
+          0
+        ],
+        [
+          -1,
+          -20,
+          12,
+          0
+        ]
+      ],
+      "bias": [
+        -461,
+        461
+      ],
+      "relu": false
+    }
+  ],
+  "config": {
+    "bits": 8,
+    "fractional_bits": 5,
+    "accumulator_bits": 24,
+    "parallelism": 1,
+    "pipeline": false,
+    "buffering": 1
+  }
+}

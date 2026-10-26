@@ -1,0 +1,7 @@
+SILICONPILOT
+Copyright 2026 Nazeeh and contributors.
+
+Original code is licensed under Apache License 2.0.
+UCI Banknote Authentication data: Lohweg, V. (2012), DOI 10.24432/C55P57,
+licensed CC BY 4.0. See docs/THIRD_PARTY.md and data/provenance.json.
+External tools and optional video dependencies retain their own licenses.

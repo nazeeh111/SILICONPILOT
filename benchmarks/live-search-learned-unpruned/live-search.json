@@ -1,0 +1,589 @@
+{
+  "schema_version": 1,
+  "evaluation": "live open-toolchain search",
+  "model_id": "banknote_4x8x2",
+  "constraints": {
+    "min_accuracy": 0.98,
+    "max_lut": 2000,
+    "max_latency_us": 2.0,
+    "clock_mhz": 25.0
+  },
+  "seed": 0,
+  "max_evaluations": 6,
+  "budget_seconds": 900.0,
+  "candidate_pool": [
+    {
+      "id": "live-dfbb5a028c",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 4,
+        "fractional_bits": 1,
+        "accumulator_bits": 16,
+        "parallelism": 1,
+        "pipeline": false,
+        "buffering": 1
+      },
+      "accuracy": 0.9345454545454546,
+      "latency_cycles": 49
+    },
+    {
+      "id": "live-ff9a88f39f",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 4,
+        "fractional_bits": 1,
+        "accumulator_bits": 16,
+        "parallelism": 1,
+        "pipeline": true,
+        "buffering": 1
+      },
+      "accuracy": 0.9345454545454546,
+      "latency_cycles": 97
+    },
+    {
+      "id": "live-c8d51a8e96",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 4,
+        "fractional_bits": 1,
+        "accumulator_bits": 16,
+        "parallelism": 2,
+        "pipeline": false,
+        "buffering": 1
+      },
+      "accuracy": 0.9345454545454546,
+      "latency_cycles": 25
+    },
+    {
+      "id": "live-9c5bf29dd5",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 4,
+        "fractional_bits": 1,
+        "accumulator_bits": 16,
+        "parallelism": 2,
+        "pipeline": true,
+        "buffering": 1
+      },
+      "accuracy": 0.9345454545454546,
+      "latency_cycles": 49
+    },
+    {
+      "id": "live-9c123080e5",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 4,
+        "fractional_bits": 1,
+        "accumulator_bits": 16,
+        "parallelism": 4,
+        "pipeline": false,
+        "buffering": 1
+      },
+      "accuracy": 0.9345454545454546,
+      "latency_cycles": 13
+    },
+    {
+      "id": "live-ccb45e5925",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 4,
+        "fractional_bits": 1,
+        "accumulator_bits": 16,
+        "parallelism": 4,
+        "pipeline": true,
+        "buffering": 1
+      },
+      "accuracy": 0.9345454545454546,
+      "latency_cycles": 25
+    },
+    {
+      "id": "live-a07ac9cdd2",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 6,
+        "fractional_bits": 3,
+        "accumulator_bits": 20,
+        "parallelism": 1,
+        "pipeline": false,
+        "buffering": 1
+      },
+      "accuracy": 0.9854545454545455,
+      "latency_cycles": 49
+    },
+    {
+      "id": "live-1b63e9a140",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 6,
+        "fractional_bits": 3,
+        "accumulator_bits": 20,
+        "parallelism": 1,
+        "pipeline": true,
+        "buffering": 1
+      },
+      "accuracy": 0.9854545454545455,
+      "latency_cycles": 97
+    },
+    {
+      "id": "live-1c67ee4f35",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 6,
+        "fractional_bits": 3,
+        "accumulator_bits": 20,
+        "parallelism": 2,
+        "pipeline": false,
+        "buffering": 1
+      },
+      "accuracy": 0.9854545454545455,
+      "latency_cycles": 25
+    },
+    {
+      "id": "live-ca867bbb27",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 6,
+        "fractional_bits": 3,
+        "accumulator_bits": 20,
+        "parallelism": 2,
+        "pipeline": true,
+        "buffering": 1
+      },
+      "accuracy": 0.9854545454545455,
+      "latency_cycles": 49
+    },
+    {
+      "id": "live-05451e6f19",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 6,
+        "fractional_bits": 3,
+        "accumulator_bits": 20,
+        "parallelism": 4,
+        "pipeline": false,
+        "buffering": 1
+      },
+      "accuracy": 0.9854545454545455,
+      "latency_cycles": 13
+    },
+    {
+      "id": "live-c4e2b0ac36",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 6,
+        "fractional_bits": 3,
+        "accumulator_bits": 20,
+        "parallelism": 4,
+        "pipeline": true,
+        "buffering": 1
+      },
+      "accuracy": 0.9854545454545455,
+      "latency_cycles": 25
+    },
+    {
+      "id": "live-c10d448638",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 8,
+        "fractional_bits": 5,
+        "accumulator_bits": 24,
+        "parallelism": 1,
+        "pipeline": false,
+        "buffering": 1
+      },
+      "accuracy": 1.0,
+      "latency_cycles": 49
+    },
+    {
+      "id": "live-b8061cd0d7",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 8,
+        "fractional_bits": 5,
+        "accumulator_bits": 24,
+        "parallelism": 1,
+        "pipeline": true,
+        "buffering": 1
+      },
+      "accuracy": 1.0,
+      "latency_cycles": 97
+    },
+    {
+      "id": "live-fb0f418aef",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 8,
+        "fractional_bits": 5,
+        "accumulator_bits": 24,
+        "parallelism": 2,
+        "pipeline": false,
+        "buffering": 1
+      },
+      "accuracy": 1.0,
+      "latency_cycles": 25
+    },
+    {
+      "id": "live-e6e68f66c9",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 8,
+        "fractional_bits": 5,
+        "accumulator_bits": 24,
+        "parallelism": 2,
+        "pipeline": true,
+        "buffering": 1
+      },
+      "accuracy": 1.0,
+      "latency_cycles": 49
+    },
+    {
+      "id": "live-c54bc9fe2f",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 8,
+        "fractional_bits": 5,
+        "accumulator_bits": 24,
+        "parallelism": 4,
+        "pipeline": false,
+        "buffering": 1
+      },
+      "accuracy": 1.0,
+      "latency_cycles": 13
+    },
+    {
+      "id": "live-2360a171a5",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 8,
+        "fractional_bits": 5,
+        "accumulator_bits": 24,
+        "parallelism": 4,
+        "pipeline": true,
+        "buffering": 1
+      },
+      "accuracy": 1.0,
+      "latency_cycles": 25
+    }
+  ],
+  "elapsed_seconds": 211.37264162499923,
+  "compile_seconds": 199.96337883314118,
+  "verification_seconds": 7.452323249890469,
+  "candidates": [
+    {
+      "id": "live-c54bc9fe2f",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 8,
+        "fractional_bits": 5,
+        "accumulator_bits": 24,
+        "parallelism": 4,
+        "pipeline": false,
+        "buffering": 1
+      },
+      "accuracy": 1.0,
+      "latency_cycles": 13,
+      "lut": 1929,
+      "ff": 451,
+      "synthesis_seconds": 25.35672041703947,
+      "verified": true,
+      "routed": true,
+      "artifacts": "live-c54bc9fe2f",
+      "fmax_mhz": 33.62248611450195,
+      "route_seconds": 58.505499458056875,
+      "compile_seconds": 83.86221987509634,
+      "dsp": 8,
+      "bram": 0
+    },
+    {
+      "id": "live-c10d448638",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 8,
+        "fractional_bits": 5,
+        "accumulator_bits": 24,
+        "parallelism": 1,
+        "pipeline": false,
+        "buffering": 1
+      },
+      "accuracy": 1.0,
+      "latency_cycles": 49,
+      "lut": 1219,
+      "ff": 453,
+      "synthesis_seconds": 5.576264083036222,
+      "verified": true,
+      "routed": true,
+      "artifacts": "live-c10d448638",
+      "fmax_mhz": 44.32034683227539,
+      "route_seconds": 12.25188849994447,
+      "compile_seconds": 17.828152582980692,
+      "dsp": 2,
+      "bram": 0
+    },
+    {
+      "id": "live-05451e6f19",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 6,
+        "fractional_bits": 3,
+        "accumulator_bits": 20,
+        "parallelism": 4,
+        "pipeline": false,
+        "buffering": 1
+      },
+      "accuracy": 0.9854545454545455,
+      "latency_cycles": 13,
+      "lut": 2101,
+      "ff": 391,
+      "synthesis_seconds": 12.743075291044079,
+      "verified": true,
+      "routed": true,
+      "artifacts": "live-05451e6f19",
+      "fmax_mhz": 32.1151008605957,
+      "route_seconds": 38.4905869999202,
+      "compile_seconds": 51.233662290964276,
+      "dsp": 15,
+      "bram": 0
+    },
+    {
+      "id": "live-fb0f418aef",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 8,
+        "fractional_bits": 5,
+        "accumulator_bits": 24,
+        "parallelism": 2,
+        "pipeline": false,
+        "buffering": 1
+      },
+      "accuracy": 1.0,
+      "latency_cycles": 25,
+      "lut": 1720,
+      "ff": 453,
+      "synthesis_seconds": 11.002094167051837,
+      "verified": true,
+      "routed": true,
+      "artifacts": "live-fb0f418aef",
+      "fmax_mhz": 37.49250030517578,
+      "route_seconds": 23.431867000064813,
+      "compile_seconds": 34.43396116711665,
+      "dsp": 4,
+      "bram": 0
+    },
+    {
+      "id": "live-2360a171a5",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 8,
+        "fractional_bits": 5,
+        "accumulator_bits": 24,
+        "parallelism": 4,
+        "pipeline": true,
+        "buffering": 1
+      },
+      "accuracy": 1.0,
+      "latency_cycles": 25,
+      "lut": 1807,
+      "ff": 581,
+      "synthesis_seconds": 12.605382916983217,
+      "verified": true,
+      "routed": false,
+      "artifacts": "live-2360a171a5"
+    }
+  ],
+  "failures": [],
+  "history": [
+    {
+      "candidate_id": "live-c54bc9fe2f",
+      "fidelity": "route",
+      "acquisition": null,
+      "reason": "common seeded warm start",
+      "iteration": 1,
+      "compile_seconds": 83.86221987509634,
+      "elapsed_seconds": 86.77252850006334,
+      "hypervolume": 0.02626999999999998,
+      "routed_candidates": 1
+    },
+    {
+      "candidate_id": "live-c10d448638",
+      "fidelity": "route",
+      "acquisition": null,
+      "reason": "common seeded warm start",
+      "iteration": 2,
+      "compile_seconds": 17.828152582980692,
+      "elapsed_seconds": 106.22777862497605,
+      "hypervolume": 0.03336999999999999,
+      "routed_candidates": 2
+    },
+    {
+      "candidate_id": "live-05451e6f19",
+      "fidelity": "route",
+      "acquisition": null,
+      "reason": "common seeded warm start",
+      "iteration": 3,
+      "compile_seconds": 51.233662290964276,
+      "elapsed_seconds": 159.60669525002595,
+      "hypervolume": 0.03336999999999999,
+      "routed_candidates": 3
+    },
+    {
+      "candidate_id": "live-fb0f418aef",
+      "fidelity": "synthesis",
+      "acquisition": 0.0035381711817771646,
+      "predicted_cost_seconds": 17.763231473091558,
+      "expected_hypervolume_gain": 0.1256577129637288,
+      "predicted_feasible_probability": 0.8125,
+      "iteration": 4,
+      "compile_seconds": 11.002094167051837,
+      "elapsed_seconds": 172.635145541979,
+      "hypervolume": 0.03336999999999999,
+      "routed_candidates": 3
+    },
+    {
+      "candidate_id": "live-2360a171a5",
+      "fidelity": "synthesis",
+      "acquisition": 0.0014033838991032459,
+      "predicted_cost_seconds": 18.057140544897663,
+      "expected_hypervolume_gain": 0.05065599904601805,
+      "predicted_feasible_probability": 0.875,
+      "iteration": 5,
+      "compile_seconds": 12.605382916983217,
+      "elapsed_seconds": 187.4459565000143,
+      "hypervolume": 0.03336999999999999,
+      "routed_candidates": 3
+    },
+    {
+      "candidate_id": "live-fb0f418aef",
+      "fidelity": "route",
+      "acquisition": 0.0010802234256892917,
+      "predicted_cost_seconds": 46.434838207653996,
+      "expected_hypervolume_gain": 0.05016000000000001,
+      "predicted_feasible_probability": 1.0,
+      "iteration": 6,
+      "compile_seconds": 23.431867000064813,
+      "elapsed_seconds": 211.3725471670041,
+      "hypervolume": 0.08353000000000002,
+      "routed_candidates": 4
+    }
+  ],
+  "budget_overrun_seconds": 0.0,
+  "pareto_ids": [
+    "live-c54bc9fe2f",
+    "live-c10d448638",
+    "live-fb0f418aef"
+  ]
+}

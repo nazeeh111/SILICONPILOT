@@ -1,0 +1,51 @@
+{
+   "creator": "Yosys 0.70+219 (git sha1 5053d0e26, Release, Clang /usr/local/osxcross/target/bin/aarch64-apple-darwin25.5-clang++ 21.1.8)",
+   "invocation": "stat -json ",
+   "modules": {
+      "\\siliconpilot_top": {
+         "num_wires":         3223,
+         "num_wire_bits":     4912,
+         "num_pub_wires":     3223,
+         "num_pub_wire_bits": 4912,
+         "num_ports":         8,
+         "num_port_bits":     18,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         2728,
+         "num_submodules":       0,
+         "num_cells_by_type": {
+            "$scopeinfo": 3,
+            "CCU2C": 401,
+            "L6MUX21": 100,
+            "LUT4": 1383,
+            "MULT18X18D": 15,
+            "PFUMX": 337,
+            "TRELLIS_FF": 489
+         }
+      }
+   },
+      "design": {
+         "num_wires":         3223,
+         "num_wire_bits":     4912,
+         "num_pub_wires":     3223,
+         "num_pub_wire_bits": 4912,
+         "num_ports":         8,
+         "num_port_bits":     18,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         2728,
+         "num_submodules":       0,
+         "num_cells_by_type": {
+            "$scopeinfo": 3,
+            "CCU2C": 401,
+            "L6MUX21": 100,
+            "LUT4": 1383,
+            "MULT18X18D": 15,
+            "PFUMX": 337,
+            "TRELLIS_FF": 489
+         }
+      }
+}
+

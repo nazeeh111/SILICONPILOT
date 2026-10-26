@@ -1,0 +1,2 @@
+SILICONPILOT turns compact neural networks into independently verified ECP5 accelerators. Explore real circuit tradeoffs, generated HDL, simulation traces and reproducible learned-search experiments through an open toolchain.
+https://github.com/nazeeh111/SILICONPILOT

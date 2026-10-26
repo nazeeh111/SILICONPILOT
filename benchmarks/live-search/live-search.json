@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "evaluation": "live open-toolchain search",
+  "model_id": "banknote_4x8x2",
+  "constraints": {
+    "min_accuracy": 0.98,
+    "max_lut": 2000,
+    "max_latency_us": 2.0,
+    "clock_mhz": 25.0
+  },
+  "seed": 0,
+  "max_evaluations": 6,
+  "budget_seconds": 180.0,
+  "elapsed_seconds": 263.1908210000256,
+  "compile_seconds": 259.58108991605695,
+  "verification_seconds": 2.3836138339247555,
+  "candidates": [
+    {
+      "id": "live-c54bc9fe2f",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 8,
+        "fractional_bits": 5,
+        "accumulator_bits": 24,
+        "parallelism": 4,
+        "pipeline": false,
+        "buffering": 1
+      },
+      "accuracy": 1.0,
+      "latency_cycles": 13,
+      "lut": 1929,
+      "ff": 451,
+      "synthesis_seconds": 53.26117812504526,
+      "verified": true,
+      "routed": true,
+      "artifacts": "live-c54bc9fe2f",
+      "fmax_mhz": 33.62248611450195,
+      "route_seconds": 73.19526312500238,
+      "compile_seconds": 126.45644125004765,
+      "dsp": 8,
+      "bram": 0
+    },
+    {
+      "id": "live-c10d448638",
+      "model_id": "banknote_4x8x2",
+      "dimensions": [
+        4,
+        8,
+        2
+      ],
+      "config": {
+        "bits": 8,
+        "fractional_bits": 5,
+        "accumulator_bits": 24,
+        "parallelism": 1,
+        "pipeline": false,
+        "buffering": 1
+      },
+      "accuracy": 1.0,
+      "latency_cycles": 49,
+      "lut": 1219,
+      "ff": 453,
+      "synthesis_seconds": 6.139526874991134,
+      "verified": true,
+      "routed": true,
+      "artifacts": "live-c10d448638",
+      "fmax_mhz": 44.32034683227539,
+      "route_seconds": 126.98512179101817,
+      "compile_seconds": 133.1246486660093,
+      "dsp": 2,
+      "bram": 0
+    }
+  ],
+  "failures": [],
+  "history": [
+    {
+      "candidate_id": "live-c54bc9fe2f",
+      "fidelity": "route",
+      "acquisition": null,
+      "reason": "common seeded warm start",
+      "iteration": 1,
+      "compile_seconds": 126.45644125004765,
+      "elapsed_seconds": 128.23286120803095,
+      "hypervolume": 0.02626999999999998,
+      "routed_candidates": 1
+    },
+    {
+      "candidate_id": "live-c10d448638",
+      "fidelity": "route",
+      "acquisition": null,
+      "reason": "common seeded warm start",
+      "iteration": 2,
+      "compile_seconds": 133.1246486660093,
+      "elapsed_seconds": 263.18929725000635,
+      "hypervolume": 0.03336999999999999,
+      "routed_candidates": 2
+    }
+  ],
+  "budget_overrun_seconds": 83.19082100002561,
+  "pareto_ids": [
+    "live-c54bc9fe2f",
+    "live-c10d448638"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "compiler_version": "0.1.0",
+  "model_name": "banknote_4x12x2",
+  "config": {
+    "bits": 4,
+    "fractional_bits": 1,
+    "accumulator_bits": 16,
+    "parallelism": 2,
+    "pipeline": true,
+    "buffering": 1
+  },
+  "dimensions": [
+    4,
+    12,
+    2
+  ],
+  "top": "siliconpilot_top",
+  "core_top": "siliconpilot_core",
+  "target": {
+    "family": "ECP5",
+    "device": "LFE5U-25F",
+    "package": "CABGA256",
+    "speed": "6"
+  },
+  "latency_cycles": 73,
+  "initiation_interval_cycles": 50,
+  "stage_compute_cycles": [
+    48,
+    24
+  ],
+  "latency_scope": "core input handshake to output-valid, empty pipeline, no backpressure; streaming shell serialization excluded",
+  "rtl_sha256": "3a799bd20ea57d46abfe4f71259f77abce53258c033f5ef259726a3f50ab5da1",
+  "model_sha256": "2f8efdaa47a8f34ad20c912c8fbccdd4ea75280ece8a920bbb95dc0cee81b4cc",
+  "arithmetic": {
+    "input_quantization": "round-to-nearest ties-to-even; signed saturation",
+    "weights": "round-to-nearest ties-to-even; signed saturation",
+    "bias": "round-to-nearest ties-to-even at 2F; modular wrap A",
+    "accumulation": "signed modular A-bit sum",
+    "requantization": "arithmetic right shift F (floor), then signed saturation",
+    "reset": "synchronous active high; abort all queued/in-flight work",
+    "handshake": "valid/ready; output stable while stalled"
+  }
+}

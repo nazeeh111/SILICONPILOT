@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "main_width": 8,
+  "heldout_widths": [
+    4,
+    12
+  ],
+  "candidate_count": 40,
+  "configs": [
+    {
+      "bits": 4,
+      "fractional_bits": 1,
+      "accumulator_bits": 16,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 1
+    },
+    {
+      "bits": 4,
+      "fractional_bits": 1,
+      "accumulator_bits": 16,
+      "parallelism": 1,
+      "pipeline": true,
+      "buffering": 1
+    },
+    {
+      "bits": 4,
+      "fractional_bits": 1,
+      "accumulator_bits": 16,
+      "parallelism": 2,
+      "pipeline": false,
+      "buffering": 1
+    },
+    {
+      "bits": 4,
+      "fractional_bits": 1,
+      "accumulator_bits": 16,
+      "parallelism": 2,
+      "pipeline": true,
+      "buffering": 1
+    },
+    {
+      "bits": 4,
+      "fractional_bits": 1,
+      "accumulator_bits": 16,
+      "parallelism": 4,
+      "pipeline": false,
+      "buffering": 1
+    },
+    {
+      "bits": 4,
+      "fractional_bits": 1,
+      "accumulator_bits": 16,
+      "parallelism": 4,
+      "pipeline": true,
+      "buffering": 1
+    },
+    {
+      "bits": 6,
+      "fractional_bits": 3,
+      "accumulator_bits": 20,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 1
+    },
+    {
+      "bits": 6,
+      "fractional_bits": 3,
+      "accumulator_bits": 20,
+      "parallelism": 1,
+      "pipeline": true,
+      "buffering": 1
+    },
+    {
+      "bits": 6,
+      "fractional_bits": 3,
+      "accumulator_bits": 20,
+      "parallelism": 2,
+      "pipeline": false,
+      "buffering": 1
+    },
+    {
+      "bits": 6,
+      "fractional_bits": 3,
+      "accumulator_bits": 20,
+      "parallelism": 2,
+      "pipeline": true,
+      "buffering": 1
+    },
+    {
+      "bits": 6,
+      "fractional_bits": 3,
+      "accumulator_bits": 20,
+      "parallelism": 4,
+      "pipeline": false,
+      "buffering": 1
+    },
+    {
+      "bits": 6,
+      "fractional_bits": 3,
+      "accumulator_bits": 20,
+      "parallelism": 4,
+      "pipeline": true,
+      "buffering": 1
+    },
+    {
+      "bits": 8,
+      "fractional_bits": 5,
+      "accumulator_bits": 24,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 1
+    },
+    {
+      "bits": 8,
+      "fractional_bits": 5,
+      "accumulator_bits": 24,
+      "parallelism": 1,
+      "pipeline": true,
+      "buffering": 1
+    },
+    {
+      "bits": 8,
+      "fractional_bits": 5,
+      "accumulator_bits": 24,
+      "parallelism": 2,
+      "pipeline": false,
+      "buffering": 1
+    },
+    {
+      "bits": 8,
+      "fractional_bits": 5,
+      "accumulator_bits": 24,
+      "parallelism": 2,
+      "pipeline": true,
+      "buffering": 1
+    },
+    {
+      "bits": 8,
+      "fractional_bits": 5,
+      "accumulator_bits": 24,
+      "parallelism": 4,
+      "pipeline": false,
+      "buffering": 1
+    },
+    {
+      "bits": 8,
+      "fractional_bits": 5,
+      "accumulator_bits": 24,
+      "parallelism": 4,
+      "pipeline": true,
+      "buffering": 1
+    },
+    {
+      "bits": 4,
+      "fractional_bits": 1,
+      "accumulator_bits": 8,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 2
+    },
+    {
+      "bits": 4,
+      "fractional_bits": 1,
+      "accumulator_bits": 8,
+      "parallelism": 4,
+      "pipeline": false,
+      "buffering": 2
+    },
+    {
+      "bits": 6,
+      "fractional_bits": 3,
+      "accumulator_bits": 12,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 2
+    },
+    {
+      "bits": 6,
+      "fractional_bits": 3,
+      "accumulator_bits": 12,
+      "parallelism": 4,
+      "pipeline": false,
+      "buffering": 2
+    },
+    {
+      "bits": 8,
+      "fractional_bits": 5,
+      "accumulator_bits": 16,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 2
+    },
+    {
+      "bits": 8,
+      "fractional_bits": 5,
+      "accumulator_bits": 16,
+      "parallelism": 4,
+      "pipeline": false,
+      "buffering": 2
+    }
+  ],
+  "workers": 2,
+  "clock_mhz": 25,
+  "routing_seed": 1,
+  "note": "Predetermined finite coverage corpus, not exhaustive. Costs are wall time per process under this documented concurrency. Search replay uses validation accuracy only."
+}

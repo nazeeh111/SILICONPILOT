@@ -1,0 +1,218 @@
+[
+  {
+    "model": "banknote_4x4x2",
+    "config": {
+      "bits": 4,
+      "fractional_bits": 1,
+      "accumulator_bits": 24,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 1
+    },
+    "validation": {
+      "split": "validation",
+      "samples": 275,
+      "correct": 252,
+      "accuracy": 0.9163636363636364,
+      "tied_scores": 27
+    }
+  },
+  {
+    "model": "banknote_4x4x2",
+    "config": {
+      "bits": 6,
+      "fractional_bits": 3,
+      "accumulator_bits": 24,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 1
+    },
+    "validation": {
+      "split": "validation",
+      "samples": 275,
+      "correct": 273,
+      "accuracy": 0.9927272727272727,
+      "tied_scores": 0
+    }
+  },
+  {
+    "model": "banknote_4x4x2",
+    "config": {
+      "bits": 8,
+      "fractional_bits": 5,
+      "accumulator_bits": 24,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 1
+    },
+    "validation": {
+      "split": "validation",
+      "samples": 275,
+      "correct": 273,
+      "accuracy": 0.9927272727272727,
+      "tied_scores": 0
+    }
+  },
+  {
+    "model": "banknote_4x4x2",
+    "config": {
+      "bits": 10,
+      "fractional_bits": 7,
+      "accumulator_bits": 24,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 1
+    },
+    "validation": {
+      "split": "validation",
+      "samples": 275,
+      "correct": 273,
+      "accuracy": 0.9927272727272727,
+      "tied_scores": 0
+    }
+  },
+  {
+    "model": "banknote_4x8x2",
+    "config": {
+      "bits": 4,
+      "fractional_bits": 1,
+      "accumulator_bits": 24,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 1
+    },
+    "validation": {
+      "split": "validation",
+      "samples": 275,
+      "correct": 257,
+      "accuracy": 0.9345454545454546,
+      "tied_scores": 9
+    }
+  },
+  {
+    "model": "banknote_4x8x2",
+    "config": {
+      "bits": 6,
+      "fractional_bits": 3,
+      "accumulator_bits": 24,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 1
+    },
+    "validation": {
+      "split": "validation",
+      "samples": 275,
+      "correct": 271,
+      "accuracy": 0.9854545454545455,
+      "tied_scores": 0
+    }
+  },
+  {
+    "model": "banknote_4x8x2",
+    "config": {
+      "bits": 8,
+      "fractional_bits": 5,
+      "accumulator_bits": 24,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 1
+    },
+    "validation": {
+      "split": "validation",
+      "samples": 275,
+      "correct": 275,
+      "accuracy": 1.0,
+      "tied_scores": 0
+    }
+  },
+  {
+    "model": "banknote_4x8x2",
+    "config": {
+      "bits": 10,
+      "fractional_bits": 7,
+      "accumulator_bits": 24,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 1
+    },
+    "validation": {
+      "split": "validation",
+      "samples": 275,
+      "correct": 275,
+      "accuracy": 1.0,
+      "tied_scores": 0
+    }
+  },
+  {
+    "model": "banknote_4x12x2",
+    "config": {
+      "bits": 4,
+      "fractional_bits": 1,
+      "accumulator_bits": 24,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 1
+    },
+    "validation": {
+      "split": "validation",
+      "samples": 275,
+      "correct": 231,
+      "accuracy": 0.84,
+      "tied_scores": 16
+    }
+  },
+  {
+    "model": "banknote_4x12x2",
+    "config": {
+      "bits": 6,
+      "fractional_bits": 3,
+      "accumulator_bits": 24,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 1
+    },
+    "validation": {
+      "split": "validation",
+      "samples": 275,
+      "correct": 275,
+      "accuracy": 1.0,
+      "tied_scores": 2
+    }
+  },
+  {
+    "model": "banknote_4x12x2",
+    "config": {
+      "bits": 8,
+      "fractional_bits": 5,
+      "accumulator_bits": 24,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 1
+    },
+    "validation": {
+      "split": "validation",
+      "samples": 275,
+      "correct": 275,
+      "accuracy": 1.0,
+      "tied_scores": 0
+    }
+  },
+  {
+    "model": "banknote_4x12x2",
+    "config": {
+      "bits": 10,
+      "fractional_bits": 7,
+      "accumulator_bits": 24,
+      "parallelism": 1,
+      "pipeline": false,
+      "buffering": 1
+    },
+    "validation": {
+      "split": "validation",
+      "samples": 275,
+      "correct": 273,
+      "accuracy": 0.9927272727272727,
+      "tied_scores": 0
+    }
+  }
+]

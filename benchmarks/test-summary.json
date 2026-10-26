@@ -1,0 +1,7 @@
+{
+  "suite": "pytest -q",
+  "passed": 53,
+  "failed": 0,
+  "duration_seconds": 18.81,
+  "scope": "Local pinned Python3.12 and OSS CAD Suite; RTL, mapped/generic netlist, bounded formal, search and stage-budget tests. Public CI is tracked separately."
+}

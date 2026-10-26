@@ -1,0 +1,1 @@
+read_verilog -formal -sv design.v formal_harness.v; prep -top formal_harness -flatten; memory_map; opt; async2sync; chformal -lower; sat -verify -prove-asserts -seq 14 -set-init-zero -set rst 0 -set-at 1 rst 1 -show-inputs -show-outputs

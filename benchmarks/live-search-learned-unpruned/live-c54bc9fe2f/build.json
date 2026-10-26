@@ -1,0 +1,258 @@
+{
+  "schema_version": 1,
+  "target": {
+    "family": "ECP5",
+    "device": "LFE5U-25F",
+    "package": "CABGA256",
+    "speed": "6"
+  },
+  "clock_mhz": 25.0,
+  "rtl_sha256": "6e8d72e48171537a85af2e80ff201ec687124b4625f7f312b12d65c7dd46dc57",
+  "model_sha256": "aa76f9dd3484b9453e97719de2284edcb9400c2b78f41b8b9e2d99bd04dd2f53",
+  "config": {
+    "bits": 8,
+    "fractional_bits": 5,
+    "accumulator_bits": 24,
+    "parallelism": 4,
+    "pipeline": false,
+    "buffering": 1
+  },
+  "dimensions": [
+    4,
+    8,
+    2
+  ],
+  "lut": 1929,
+  "logic_lut": 1171,
+  "carry_lut": 758,
+  "lut_scope": "Mapped LUT4 equivalents: logic LUT4 + 2 per CCU2C carry cell; mux primitives reported separately in cell_counts.",
+  "ff": 451,
+  "dsp": 8,
+  "bram": 0,
+  "cell_counts": {
+    "$scopeinfo": 3,
+    "TRELLIS_FF": 451,
+    "LUT4": 1171,
+    "PFUMX": 238,
+    "CCU2C": 379,
+    "MULT18X18D": 8,
+    "L6MUX21": 31
+  },
+  "synthesis_seconds": 25.35672041703947,
+  "route_seconds": 58.505499458056875,
+  "compile_seconds": 83.86221987509634,
+  "routed": true,
+  "latency_cycles": 13,
+  "initiation_interval_cycles": 10,
+  "latency_us": 0.52,
+  "core_throughput_estimate_per_s": 2500000.0,
+  "throughput_scope": "Analytic core initiation-interval bound; excludes streaming-shell serialization, stalls, and physical IO.",
+  "measurement_scope": "core simulated cycle model; Yosys mapped cells; nextpnr device timing estimate when routed. No physical FPGA measurement.",
+  "io_constraints": "Unconstrained board pins auto-assigned by nextpnr; not a board-ready programming image. Clock constrained; external IO delays unspecified.",
+  "tool_versions": {
+    "yosys": "Yosys 0.70+219 (git sha1 5053d0e26, Release, Clang /usr/local/osxcross/target/bin/aarch64-apple-darwin25.5-clang++ 21.1.8)",
+    "nextpnr": "mkdir: /Users/nazeeh/.config/yosyshq: Operation not permitted\nmkdir: /Users/nazeeh/.local/share/yosyshq: Operation not permitted\n\"nextpnr-ecp5\" -- Next Generation Place and Route (Version nextpnr-0.11.1-79-g22c5adf4)"
+  },
+  "commands": [
+    [
+      "/private/tmp/siliconpilot-tools/oss-cad-suite/bin/yosys",
+      "-s",
+      "synth.ys"
+    ],
+    [
+      "/private/tmp/siliconpilot-tools/oss-cad-suite/bin/nextpnr-ecp5",
+      "--25k",
+      "--package",
+      "CABGA256",
+      "--speed",
+      "6",
+      "--json",
+      "synthesized.json",
+      "--lpf",
+      "constraints.lpf",
+      "--lpf-allow-unconstrained",
+      "--freq",
+      "25.0",
+      "--seed",
+      "1",
+      "--textcfg",
+      "routed.config",
+      "--report",
+      "routing.json",
+      "--timing-allow-fail"
+    ]
+  ],
+  "fmax_mhz": 33.62248611450195,
+  "timing_met": true,
+  "routing_utilization": {
+    "ALU54B": {
+      "available": 14,
+      "used": 0
+    },
+    "CLKDIVF": {
+      "available": 4,
+      "used": 0
+    },
+    "DCCA": {
+      "available": 56,
+      "used": 1
+    },
+    "DCSC": {
+      "available": 2,
+      "used": 0
+    },
+    "DCUA": {
+      "available": 1,
+      "used": 0
+    },
+    "DDRDLL": {
+      "available": 4,
+      "used": 0
+    },
+    "DLLDELD": {
+      "available": 8,
+      "used": 0
+    },
+    "DP16KD": {
+      "available": 56,
+      "used": 0
+    },
+    "DQSBUFM": {
+      "available": 8,
+      "used": 0
+    },
+    "DTR": {
+      "available": 1,
+      "used": 0
+    },
+    "ECLKBRIDGECS": {
+      "available": 2,
+      "used": 0
+    },
+    "ECLKSYNCB": {
+      "available": 10,
+      "used": 0
+    },
+    "EHXPLLL": {
+      "available": 2,
+      "used": 0
+    },
+    "EXTREFB": {
+      "available": 1,
+      "used": 0
+    },
+    "GSR": {
+      "available": 1,
+      "used": 0
+    },
+    "IOLOGIC": {
+      "available": 128,
+      "used": 0
+    },
+    "JTAGG": {
+      "available": 1,
+      "used": 0
+    },
+    "MULT18X18D": {
+      "available": 28,
+      "used": 8
+    },
+    "OSCG": {
+      "available": 1,
+      "used": 0
+    },
+    "PCSCLKDIV": {
+      "available": 2,
+      "used": 0
+    },
+    "SEDGA": {
+      "available": 1,
+      "used": 0
+    },
+    "SIOLOGIC": {
+      "available": 69,
+      "used": 0
+    },
+    "TRELLIS_COMB": {
+      "available": 24288,
+      "used": 2049
+    },
+    "TRELLIS_ECLKBUF": {
+      "available": 8,
+      "used": 0
+    },
+    "TRELLIS_FF": {
+      "available": 24288,
+      "used": 451
+    },
+    "TRELLIS_IO": {
+      "available": 197,
+      "used": 22
+    },
+    "TRELLIS_RAMW": {
+      "available": 3036,
+      "used": 0
+    },
+    "USRMCLK": {
+      "available": 1,
+      "used": 0
+    }
+  },
+  "timing_clocks": {
+    "$glbnet$clk$TRELLIS_IO_IN": {
+      "achieved": 33.62248611450195,
+      "constraint": 25
+    }
+  },
+  "routed_comb": 2049,
+  "artifacts": {
+    "design.v": {
+      "bytes": 9164,
+      "sha256": "6e8d72e48171537a85af2e80ff201ec687124b4625f7f312b12d65c7dd46dc57"
+    },
+    "weights.json": {
+      "bytes": 1391,
+      "sha256": "1147d8bf9d7e377898e45b450fa3fdb7f5cddcbe488179e3232ab97c756b5a3e"
+    },
+    "manifest.json": {
+      "bytes": 1368,
+      "sha256": "3bc757396584a4e1676aca449871ef10205c2dac00e5c282bf14a5f525125dd3"
+    },
+    "synth.ys": {
+      "bytes": 156,
+      "sha256": "06ee2f4de53a02945e06548dcf398f3965477a7bbe34bb1c2804608bd942e762"
+    },
+    "synthesized.json": {
+      "bytes": 4115579,
+      "sha256": "235e85ecd848f956b0552394d7a63548f37e7f21fa08f22c2a717b4d009f924c"
+    },
+    "synthesized.v": {
+      "bytes": 2234131,
+      "sha256": "12600e7094c26d20b877d4963bf875e3abcafe52e54339b9b2ede2a0e55d92d7"
+    },
+    "synthesis.log": {
+      "bytes": 459998,
+      "sha256": "1e96ed33f0fd9c475f2b4112a367596d35a1e695668c0368386001a40176e141"
+    },
+    "synthesis-stat.json": {
+      "bytes": 1499,
+      "sha256": "66939db94bd2317b644f6fda2267aa8eff707925775a710c7c449c5492b69b1d"
+    },
+    "constraints.lpf": {
+      "bytes": 108,
+      "sha256": "1c305ff9d082d777ce0bf002980d256bae3233ec9c849102d2b7d538923db90a"
+    },
+    "routing.json": {
+      "bytes": 70235,
+      "sha256": "bdd7c52bf126ff64bc196dfa0d47b30ceb6a0d565ec5d82c3b47e114d6962172"
+    },
+    "routing.log": {
+      "bytes": 55805,
+      "sha256": "215ae687ffe6944a0eb5aefff669c0fe2ee8f47d689d15f0323358c0af7e1ec5"
+    },
+    "routed.config": {
+      "bytes": 741651,
+      "sha256": "9d55d68792f66428d64ddcc10130843baea3f9c7e2a6326d042d64e24c7eb89a"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "system": "Darwin",
+  "release": "25.6.0",
+  "machine": "arm64",
+  "python": "3.12.13",
+  "logical_cpus": 10,
+  "corpus_workers": 2,
+  "timing_method": "time.perf_counter wall seconds per subprocess; warm/cold startup and contention retained",
+  "limitation": "General shared desktop, not an isolated benchmarking host. Other task work occurred during collection. Durations include host contention and are replayed as recorded, not normalized or claimed portable.",
+  "cpu_model": null,
+  "physical_memory_bytes": null,
+  "hardware_detail_limit": "CPU-brand and RAM sysctl reads denied by local sandbox; no alternate access attempted."
+}

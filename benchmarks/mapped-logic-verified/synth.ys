@@ -1,0 +1,3 @@
+read_verilog -sv design.v
+synth_ecp5 -nodsp -top siliconpilot_top -json synthesized.json
+write_verilog -noattr synthesized.v

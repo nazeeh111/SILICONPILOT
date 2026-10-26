@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "samples": 353,
+  "boundary_and_random_samples": 78,
+  "dataset_samples": 275,
+  "latency_cycles": 13,
+  "tests": [
+    "integer bit equality",
+    "boundary values",
+    "seeded random values",
+    "output stability under backpressure",
+    "reset with in-flight input and stalled completed output",
+    "packed core handshake",
+    "streaming shell handshake and score ordering"
+  ],
+  "simulator": "Icarus Verilog version 14.0 (devel) (s20260301-670-g2b8d42dc0-dirty)",
+  "results": {
+    "core": {
+      "passed": true,
+      "samples": 353,
+      "simulation_cycles": 3555,
+      "backpressure_cycles": 198,
+      "first_latency_cycles": 13,
+      "waveform": "waveform.vcd",
+      "log": "core.log"
+    },
+    "streaming": {
+      "passed": true,
+      "samples": 353,
+      "simulation_cycles": 3579,
+      "backpressure_cycles": 283,
+      "first_latency_cycles": 14,
+      "waveform": "streaming.vcd",
+      "log": "streaming.log"
+    }
+  },
+  "rtl_sha256": "fcd30f31eae7a7b010e8e5a2d0928b73e607390cb30bb4663afb196e0ee64a41"
+}

@@ -1,0 +1,27 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+.DS_Store
+build/
+dist/
+work/
+*.vvp
+sim_core
+sim_streaming
+node_modules/
+# Large reproducible intermediates are retained in the release evidence archive.
+benchmarks/**/synthesized.json
+benchmarks/**/synthesized.v
+benchmarks/**/routed.config
+benchmarks/**/*.vcd
+benchmarks/**/*.hex
+benchmarks/**/sim_*
+benchmarks/**/generic-netlist.v
+benchmarks/**/mapped-netlist.v
+benchmarks/**/logic-netlist.v
+benchmarks/**/netlist-check/simulation
+benchmarks/**/netlist-check/generic-synthesized.v
+release-assets/
+docs/demo/composition/snapshots/
+docs/demo/brag.mp4

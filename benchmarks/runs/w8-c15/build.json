@@ -1,0 +1,258 @@
+{
+  "schema_version": 1,
+  "target": {
+    "family": "ECP5",
+    "device": "LFE5U-25F",
+    "package": "CABGA256",
+    "speed": "6"
+  },
+  "clock_mhz": 25.0,
+  "rtl_sha256": "768675ed07ec4b80c2a196666786247ce84c69baf66ebd07fa66ffbc61ee91ad",
+  "model_sha256": "aa76f9dd3484b9453e97719de2284edcb9400c2b78f41b8b9e2d99bd04dd2f53",
+  "config": {
+    "bits": 8,
+    "fractional_bits": 5,
+    "accumulator_bits": 24,
+    "parallelism": 2,
+    "pipeline": true,
+    "buffering": 1
+  },
+  "dimensions": [
+    4,
+    8,
+    2
+  ],
+  "lut": 1720,
+  "ff": 519,
+  "dsp": 4,
+  "bram": 0,
+  "cell_counts": {
+    "$scopeinfo": 3,
+    "TRELLIS_FF": 519,
+    "LUT4": 974,
+    "PFUMX": 168,
+    "CCU2C": 373,
+    "L6MUX21": 44,
+    "MULT18X18D": 4
+  },
+  "synthesis_seconds": 17.250036083045416,
+  "route_seconds": 81.40786429203581,
+  "compile_seconds": 98.65790037508123,
+  "routed": true,
+  "latency_cycles": 49,
+  "initiation_interval_cycles": 34,
+  "latency_us": 1.96,
+  "measurement_scope": "core simulated cycle model; Yosys mapped cells; nextpnr device timing estimate when routed. No physical FPGA measurement.",
+  "io_constraints": "Unconstrained board pins auto-assigned by nextpnr; not a board-ready programming image. Clock constrained; external IO delays unspecified.",
+  "tool_versions": {
+    "yosys": "Yosys 0.70+219 (git sha1 5053d0e26, Release, Clang /usr/local/osxcross/target/bin/aarch64-apple-darwin25.5-clang++ 21.1.8)",
+    "nextpnr": "mkdir: /Users/nazeeh/.config/yosyshq: Operation not permitted\nmkdir: /Users/nazeeh/.local/share/yosyshq: Operation not permitted\n\"nextpnr-ecp5\" -- Next Generation Place and Route (Version nextpnr-0.11.1-79-g22c5adf4)"
+  },
+  "commands": [
+    [
+      "/private/tmp/siliconpilot-tools/oss-cad-suite/bin/yosys",
+      "-s",
+      "synth.ys"
+    ],
+    [
+      "/private/tmp/siliconpilot-tools/oss-cad-suite/bin/nextpnr-ecp5",
+      "--25k",
+      "--package",
+      "CABGA256",
+      "--speed",
+      "6",
+      "--json",
+      "synthesized.json",
+      "--lpf",
+      "constraints.lpf",
+      "--lpf-allow-unconstrained",
+      "--freq",
+      "25.0",
+      "--seed",
+      "1",
+      "--textcfg",
+      "routed.config",
+      "--report",
+      "routing.json",
+      "--timing-allow-fail"
+    ]
+  ],
+  "fmax_mhz": 62.22775650024414,
+  "timing_met": true,
+  "routing_utilization": {
+    "ALU54B": {
+      "available": 14,
+      "used": 0
+    },
+    "CLKDIVF": {
+      "available": 4,
+      "used": 0
+    },
+    "DCCA": {
+      "available": 56,
+      "used": 1
+    },
+    "DCSC": {
+      "available": 2,
+      "used": 0
+    },
+    "DCUA": {
+      "available": 1,
+      "used": 0
+    },
+    "DDRDLL": {
+      "available": 4,
+      "used": 0
+    },
+    "DLLDELD": {
+      "available": 8,
+      "used": 0
+    },
+    "DP16KD": {
+      "available": 56,
+      "used": 0
+    },
+    "DQSBUFM": {
+      "available": 8,
+      "used": 0
+    },
+    "DTR": {
+      "available": 1,
+      "used": 0
+    },
+    "ECLKBRIDGECS": {
+      "available": 2,
+      "used": 0
+    },
+    "ECLKSYNCB": {
+      "available": 10,
+      "used": 0
+    },
+    "EHXPLLL": {
+      "available": 2,
+      "used": 0
+    },
+    "EXTREFB": {
+      "available": 1,
+      "used": 0
+    },
+    "GSR": {
+      "available": 1,
+      "used": 0
+    },
+    "IOLOGIC": {
+      "available": 128,
+      "used": 0
+    },
+    "JTAGG": {
+      "available": 1,
+      "used": 0
+    },
+    "MULT18X18D": {
+      "available": 28,
+      "used": 4
+    },
+    "OSCG": {
+      "available": 1,
+      "used": 0
+    },
+    "PCSCLKDIV": {
+      "available": 2,
+      "used": 0
+    },
+    "SEDGA": {
+      "available": 1,
+      "used": 0
+    },
+    "SIOLOGIC": {
+      "available": 69,
+      "used": 0
+    },
+    "TRELLIS_COMB": {
+      "available": 24288,
+      "used": 1836
+    },
+    "TRELLIS_ECLKBUF": {
+      "available": 8,
+      "used": 0
+    },
+    "TRELLIS_FF": {
+      "available": 24288,
+      "used": 519
+    },
+    "TRELLIS_IO": {
+      "available": 197,
+      "used": 22
+    },
+    "TRELLIS_RAMW": {
+      "available": 3036,
+      "used": 0
+    },
+    "USRMCLK": {
+      "available": 1,
+      "used": 0
+    }
+  },
+  "timing_clocks": {
+    "$glbnet$clk$TRELLIS_IO_IN": {
+      "achieved": 62.22775650024414,
+      "constraint": 25
+    }
+  },
+  "artifacts": {
+    "design.v": {
+      "bytes": 8942,
+      "sha256": "768675ed07ec4b80c2a196666786247ce84c69baf66ebd07fa66ffbc61ee91ad"
+    },
+    "weights.json": {
+      "bytes": 1390,
+      "sha256": "8c2669d34a52ff03fa16ab495d34ee2f51763140dc63c60905443b8e151f52a7"
+    },
+    "manifest.json": {
+      "bytes": 1369,
+      "sha256": "e5606a57b975850d726ff57b1c6bbd32717ba537adf5bb543ff23c54656ffa2b"
+    },
+    "synth.ys": {
+      "bytes": 156,
+      "sha256": "06ee2f4de53a02945e06548dcf398f3965477a7bbe34bb1c2804608bd942e762"
+    },
+    "synthesized.json": {
+      "bytes": 3709933,
+      "sha256": "5273614fc5f28271a66d94dede631af7fe98547f4d666cc367e54144c6820386"
+    },
+    "synthesized.v": {
+      "bytes": 1666610,
+      "sha256": "91695e4cf5c9eb5aa600f2c9807b89c7ed5db45e28cf7faa671dac3f80153981"
+    },
+    "synthesis.log": {
+      "bytes": 290249,
+      "sha256": "b3376fa5cab834a4a7ff9ed1660fb3efd0ad1407bba4bf0f145410746221bd9d"
+    },
+    "synthesis-stat.json": {
+      "bytes": 1497,
+      "sha256": "dfa2ad47c2c00b7930e3fb038f526c4da66183c227c919e97964d470cef24ee4"
+    },
+    "constraints.lpf": {
+      "bytes": 108,
+      "sha256": "1c305ff9d082d777ce0bf002980d256bae3233ec9c849102d2b7d538923db90a"
+    },
+    "routing.json": {
+      "bytes": 73171,
+      "sha256": "f75720adc0aa6be2414f3e3e431ea9d6ce20bf87293ec62c0d784e7b18dbb2f0"
+    },
+    "routing.log": {
+      "bytes": 56100,
+      "sha256": "976413304a48abb1da1fd878827568feee0c5dc3d493018fc456b4f4c4d91921"
+    },
+    "routed.config": {
+      "bytes": 676089,
+      "sha256": "359f5731a8969063aa89ba603599b6340ef49f6c59a3a2dca6ae90b1e25e2a57"
+    }
+  },
+  "logic_lut": 974,
+  "carry_lut": 746,
+  "lut_scope": "Total mapped LUT4 equivalents: logic LUT4 + 2 per CCU2C carry cell",
+  "routed_comb": 1836,
+  "core_throughput_estimate_per_s": 735294.1176470588,
+  "throughput_scope": "Analytic packed-core bound at target clock, excludes streaming serialization and backpressure"
+}

@@ -1,0 +1,3 @@
+read_verilog -sv ../design.v
+synth -top siliconpilot_top
+write_verilog -noattr generic-synthesized.v

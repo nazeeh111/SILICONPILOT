@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#f2f0e9" />
+    <meta
+      name="description"
+      content="SILICONPILOT Hardware Design Observatory. Inspect verified neural-network accelerators, real ECP5 compilation measurements, and reproducible design-space search."
+    />
+    <title>SILICONPILOT · Hardware Design Observatory</title>
+    <link rel="icon" href="mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to observatory</a>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="SILICONPILOT home"
+        ><img src="mark.svg" width="32" height="32" alt="" /><span
+          >SILICON<span class="brand-light">PILOT</span
+          ><small>HARDWARE DESIGN OBSERVATORY</small></span
+        ></a
+      >
+      <div class="top-right">
+        <span class="recorded"><i></i> RECORDED EXPERIMENT</span
+        ><button id="local-compile-toggle" class="small-button" hidden>
+          Local compiler ↗</button
+        ><a
+          id="repo-link"
+          href="https://github.com/nazeeh111/SILICONPILOT"
+          target="_blank"
+          rel="noreferrer"
+          >Source & methodology <span aria-hidden="true">↗</span></a
+        >
+      </div>
+    </header>
+    <div class="workspace">
+      <aside class="rail" aria-label="Sections">
+        <a class="rail-active" href="#main" aria-label="Design space"
+          ><svg viewBox="0 0 24 24">
+            <path
+              d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"
+            /></svg></a
+        ><a href="#model-section" aria-label="Model graph"
+          ><svg viewBox="0 0 24 24">
+            <path d="M4 5h5v5H4zM15 14h5v5h-5zM6 10v6h9M9 7h8v7" /></svg></a
+        ><a href="#evidence-section" aria-label="Verification evidence"
+          ><svg viewBox="0 0 24 24">
+            <path d="m5 12 4 4 10-10M4 20h16" /></svg></a
+        ><span class="rail-label">ECP5 / OPEN TOOLCHAIN</span>
+      </aside>
+      <main id="main">
+        <section class="heading">
+          <div>
+            <p class="eyebrow">ML → CIRCUITS → EVIDENCE</p>
+            <h1>Find the hardware<br />your model deserves.</h1>
+            <p class="lede">
+              Explore the cost of every design decision. Each point is a real
+              compiled accelerator with inspectable verification evidence.
+            </p>
+          </div>
+          <div class="experiment-meta">
+            <span class="meta-label">EXPERIMENT / 001</span>
+            <div id="target-device">ECP5 · LFE5U-25F</div>
+            <p id="dataset-label">Loading experiment…</p>
+            <span class="stamp">SIMULATED + SYNTHESIZED + ROUTED</span>
+          </div>
+        </section>
+        <div id="load-message" class="notice" role="status">
+          Loading recorded measurements…
+        </div>
+        <section class="summary-strip" aria-label="Experiment summary">
+          <div>
+            <span class="metric-kicker">DESIGNS MEASURED</span
+            ><strong id="total-designs">—</strong
+            ><small id="verified-count">Awaiting evidence</small>
+          </div>
+          <div>
+            <span class="metric-kicker">ACCURACY RANGE</span
+            ><strong id="accuracy-range">—</strong
+            ><small>Held-out validation examples</small>
+          </div>
+          <div>
+            <span class="metric-kicker">ROUTED CLOCK</span
+            ><strong id="clock-range">—</strong
+            ><small>Timing estimate, not board measurement</small>
+          </div>
+          <div>
+            <span class="metric-kicker">FEASIBLE DESIGNS</span
+            ><strong id="feasible-count">—</strong
+            ><small id="feasible-note"
+              >Set your hardware constraints below</small
+            >
+          </div>
+        </section>
+        <p class="measurement-note">
+          Core latency excludes streaming input/output serialization. Resource
+          budgets count mapped LUT4 equivalents, including carry logic. Detailed
+          mapped and routed usage is retained in each measurement record.
+        </p>
+        <section class="design-grid">
+          <div class="panel pareto-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">01 / DESIGN SPACE</p>
+                <h2>The tradeoff frontier</h2>
+              </div>
+              <label class="compact-select"
+                >MODEL
+                <select id="model-select" aria-label="Model configuration">
+                  <option value="all">All models</option>
+                </select></label
+              >
+            </div>
+            <div class="plot-topline">
+              <span
+                ><i class="legend-dot orange"></i>Feasible
+                <i class="legend-dot gray"></i>Outside budget
+                <span class="legend-frontier"></span>2D Pareto projection</span
+              ><label
+                >X AXIS
+                <select
+                  id="axis-select"
+                  aria-label="Pareto chart horizontal axis"
+                >
+                  <option value="latency_us">Latency · µs</option>
+                  <option value="lut">Mapped LUT4</option>
+                  <option value="compile_seconds">Compilation · s</option>
+                </select></label
+              >
+            </div>
+            <div
+              id="pareto-chart"
+              class="chart-wrap"
+              aria-label="Selectable accelerator design chart"
+            ></div>
+            <div class="plot-caption">
+              <span id="plot-caption"
+                >Select a design to inspect its circuit and evidence.</span
+              ><span class="mono">LOWER COST ↔ HIGHER ACCURACY</span>
+            </div>
+          </div>
+          <aside class="panel constraints">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">02 / YOUR CONSTRAINTS</p>
+                <h2>Set the envelope</h2>
+              </div>
+              <button class="text-button" id="reset-budgets">Reset</button>
+            </div>
+            <p class="muted">
+              Filter measured designs. Changing a budget selects from recorded
+              results; it does not start a new compilation.
+            </p>
+            <label class="slider-label" for="budget-accuracy"
+              >Minimum accuracy <output id="accuracy-output">0%</output></label
+            ><input
+              type="range"
+              id="budget-accuracy"
+              min="0"
+              max="100"
+              step="0.1"
+              value="0"
+            />
+            <div class="range-ends" id="accuracy-ends">
+              <span>0%</span><span>100%</span>
+            </div>
+            <label class="slider-label" for="budget-latency"
+              >Maximum latency <output id="latency-output">—</output></label
+            ><input
+              type="range"
+              id="budget-latency"
+              min="1"
+              max="1000"
+              step="1"
+              value="1000"
+            />
+            <div class="range-ends" id="latency-ends">
+              <span>FAST</span><span>RELAXED</span>
+            </div>
+            <label class="slider-label" for="budget-lut"
+              >Mapped LUT4 budget <output id="lut-output">—</output></label
+            ><input
+              type="range"
+              id="budget-lut"
+              min="1"
+              max="24000"
+              step="1"
+              value="24000"
+            />
+            <div class="range-ends" id="lut-ends">
+              <span>COMPACT</span><span>ROOM TO EXPLORE</span>
+            </div>
+            <div class="recommendation" id="recommendation">
+              <span class="eyebrow">RECOMMENDED DESIGN</span
+              ><strong>Awaiting measurements</strong>
+              <p>
+                The lowest-latency verified design inside your envelope appears
+                here.
+              </p>
+            </div>
+            <button id="export-selection" class="primary-button" disabled>
+              Export design record <span>↓</span>
+            </button>
+          </aside>
+        </section>
+        <section class="detail-grid">
+          <div class="panel model-panel" id="model-section">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">03 / MODEL & DATAFLOW</p>
+                <h2 id="model-title">From features to decisions</h2>
+              </div>
+              <span id="model-shape" class="tag">DENSE / RELU</span>
+            </div>
+            <div id="model-graph" class="model-graph"></div>
+            <div
+              class="operation-detail"
+              id="operation-detail"
+              aria-live="polite"
+            >
+              Select a layer to inspect its operation.
+            </div>
+            <div class="dataflow-note" id="dataflow-note">
+              Select a candidate to inspect its arithmetic and multiplier
+              scheduling.
+            </div>
+            <div id="config-grid" class="config-grid"></div>
+          </div>
+          <div class="panel history-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">04 / SEARCH TRACE</p>
+                <h2>Learning where to look</h2>
+              </div>
+              <span class="tag" id="history-count">— EVALUATIONS</span>
+            </div>
+            <div id="history-chart" class="history-chart"></div>
+            <p id="history-note" class="muted history-note">
+              Actual evaluated designs in recorded order. Search comparisons are
+              reported in the reproducible benchmark artifacts.
+            </p>
+          </div>
+        </section>
+        <section class="panel evidence-panel" id="evidence-section">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">05 / INSPECT THE EVIDENCE</p>
+              <h2>
+                <span id="candidate-name">No design selected</span>
+                <span id="candidate-status" class="verification-tag"></span>
+              </h2>
+            </div>
+            <div class="candidate-tools">
+              <label class="candidate-picker"
+                >INSPECT DESIGN
+                <select
+                  id="candidate-select"
+                  aria-label="Candidate design"
+                ></select
+              ></label>
+              <div id="artifact-links" class="artifact-links"></div>
+            </div>
+          </div>
+          <div class="candidate-metrics" id="candidate-metrics"></div>
+          <div id="throughput-note" class="throughput-note" hidden></div>
+          <div class="tablist" role="tablist" aria-label="Candidate evidence">
+            <button
+              id="tab-verification"
+              class="tab active"
+              role="tab"
+              aria-selected="true"
+              aria-controls="view-verification"
+              data-tab="verification"
+            >
+              Verification</button
+            ><button
+              id="tab-hdl"
+              class="tab"
+              role="tab"
+              aria-selected="false"
+              aria-controls="view-hdl"
+              tabindex="-1"
+              data-tab="hdl"
+            >
+              Generated HDL</button
+            ><button
+              id="tab-waveform"
+              class="tab"
+              role="tab"
+              aria-selected="false"
+              aria-controls="view-waveform"
+              tabindex="-1"
+              data-tab="waveform"
+            >
+              Waveform replay</button
+            ><button
+              id="tab-measurements"
+              class="tab"
+              role="tab"
+              aria-selected="false"
+              aria-controls="view-measurements"
+              tabindex="-1"
+              data-tab="measurements"
+            >
+              Measurements
+            </button>
+          </div>
+          <div
+            id="view-verification"
+            class="tab-view"
+            role="tabpanel"
+            aria-labelledby="tab-verification"
+          ></div>
+          <div
+            id="view-hdl"
+            class="tab-view"
+            role="tabpanel"
+            aria-labelledby="tab-hdl"
+            hidden
+          >
+            <div class="code-toolbar">
+              <span id="hdl-filename">design.v</span
+              ><button id="copy-hdl" class="text-button">Copy HDL</button>
+            </div>
+            <pre
+              class="code"
+            ><code id="hdl-code">Select a measured design.</code></pre>
+          </div>
+          <div
+            id="view-waveform"
+            class="tab-view"
+            role="tabpanel"
+            aria-labelledby="tab-waveform"
+            hidden
+          >
+            <div class="wave-toolbar">
+              <p id="wave-caption">Recorded RTL simulation trace</p>
+              <div>
+                <button id="wave-play" class="small-button" disabled>
+                  ▶ Replay</button
+                ><label
+                  ><span id="wave-position-label">Cycle</span>
+                  <input
+                    id="wave-position"
+                    type="range"
+                    min="0"
+                    max="1"
+                    value="0"
+                    disabled /></label
+                ><output id="wave-cycle">0</output>
+              </div>
+            </div>
+            <div id="waveform-chart" class="waveform-chart"></div>
+          </div>
+          <div
+            id="view-measurements"
+            class="tab-view"
+            role="tabpanel"
+            aria-labelledby="tab-measurements"
+            hidden
+          >
+            <pre class="code"><code id="measurement-code">{}</code></pre>
+          </div>
+        </section>
+        <footer>
+          <div class="footer-mark">
+            SILICONPILOT
+            <span>Software makes choices. Circuits show the cost.</span>
+          </div>
+          <p>
+            All timings are simulation or place-and-route estimates. No physical
+            FPGA measurements are claimed.<br /><span
+              id="provenance-label"
+            ></span>
+          </p>
+          <a
+            href="https://github.com/nazeeh111/SILICONPILOT#reproduce"
+            target="_blank"
+            rel="noreferrer"
+            >Reproduce this experiment ↗</a
+          >
+        </footer>
+      </main>
+    </div>
+    <div id="toast" role="status" class="toast" hidden></div>
+    <dialog id="local-compile-dialog" class="compile-dialog">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">LOCAL / VERIFIED CORE</p>
+          <h2>Compile a real circuit</h2>
+        </div>
+        <button
+          id="local-compile-close"
+          class="text-button"
+          aria-label="Close local compiler"
+        >
+          Close ×
+        </button>
+      </div>
+      <p class="muted">
+        This runs the same compiler and integer verification as the CLI on this
+        computer. Results here are fresh simulations. Recorded Pareto
+        measurements stay separate.
+      </p>
+      <form id="local-compile-form">
+        <label class="wide-field"
+          >Model<select id="compile-model" required></select
+        ></label>
+        <div class="compile-fields">
+          <label
+            >Precision · bits<input
+              id="compile-bits"
+              type="number"
+              min="3"
+              max="16"
+              step="1"
+              required /></label
+          ><label
+            >Fractional bits<input
+              id="compile-fraction"
+              type="number"
+              min="0"
+              max="15"
+              step="1"
+              required /></label
+          ><label
+            >Accumulator · bits<input
+              id="compile-accumulator"
+              type="number"
+              min="6"
+              max="48"
+              step="1"
+              required /></label
+          ><label
+            >Parallel MAC lanes<input
+              id="compile-parallelism"
+              type="number"
+              min="1"
+              max="32"
+              step="1"
+              required /></label
+          ><label
+            >Buffering<select id="compile-buffering">
+              <option value="1">1 · direct</option>
+              <option value="2">2 · elastic</option>
+            </select></label
+          ><label class="checkbox-label"
+            ><input id="compile-pipeline" type="checkbox" />Multiplier
+            pipeline</label
+          >
+        </div>
+        <p class="muted compile-requirements">
+          Accumulator width must be at least twice the activation precision.
+          Fractional bits must be fewer than precision bits.
+        </p>
+        <button id="local-compile-submit" class="primary-button" type="submit">
+          Generate HDL & simulate <span>→</span>
+        </button>
+      </form>
+      <div
+        id="local-compile-result"
+        class="local-result"
+        role="status"
+        hidden
+      ></div>
+    </dialog>
+    <script src="app.js" defer></script>
+  </body>
+</html>

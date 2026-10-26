@@ -1,0 +1,12 @@
+{
+  "sources": {
+    "benchmarks/search/experiments.json": "7cd6be5d0ddb0bbaddd7ec9d89ab73a2cf3b615de92eb88810262609f796b1b8",
+    "benchmarks/search/surrogate_metadata.json": "74685063e56b1914b5a48d15b4b8ea161641b27365a4e8e9f0564777f5f29280"
+  },
+  "figures": [
+    "search-comparison.svg",
+    "search-comparison.png",
+    "surrogate-generalization.svg",
+    "surrogate-generalization.png"
+  ]
+}

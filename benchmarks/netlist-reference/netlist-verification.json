@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "rtl_sha256": "e4cf0ed5bb1cbbfcb3a070bc98fd0541d17f80541cc163f9ccee55a451c6c13b",
+  "expected_sha256": "ac663305c3a3fd1b824ce3cd9b568b9bcb9ad05ec95dea401fbbe1c6e9eb65e5",
+  "inputs_sha256": "71b41b216f8ac48e66205bb0bad035756b5f3df4335f23784eb3758819945c7c",
+  "testbench_sha256": "cb41c1ed59ea8f3e33655a760805867066551557eaf7df05fcd6cc7599cdd100",
+  "mapped_netlist_sha256": "0d3d8b665bebab43bb17fadef6561cc808d53ac2810763a09279fe441c5c949a",
+  "samples": 353,
+  "mapped_simulation_available": false,
+  "unsupported_mapped_primitives": [
+    "MULT18X18D"
+  ],
+  "limitations": "Zero-delay digital functional simulation; no routed delays, IO electrical validation, physical FPGA measurement, or arbitrary-input equivalence proof.",
+  "commands": [
+    [
+      "/private/tmp/siliconpilot-tools/oss-cad-suite/bin/yosys",
+      "-s",
+      "generic-synth.ys"
+    ],
+    [
+      "/private/tmp/siliconpilot-tools/oss-cad-suite/bin/iverilog",
+      "-g2012",
+      "-s",
+      "tb",
+      "-o",
+      "simulation",
+      "/Users/nazeeh/Documents/Codex/2026-10-25/go-2/outputs/SILICONPILOT/benchmarks/netlist-reference/netlist-check/generic-synthesized.v",
+      "tb_streaming.v"
+    ],
+    [
+      "/private/tmp/siliconpilot-tools/oss-cad-suite/bin/vvp",
+      "simulation"
+    ]
+  ],
+  "scope": "separately synthesized generic gates; mapped ECP5 simulation unavailable",
+  "mapped_simulation_passed": null,
+  "generic_netlist_sha256": "0c5c088f5c6613705d7b2bc6cb48f1247d2ea4ea4fc4eab61777d7485ea4cedb",
+  "mapped_limitation": "No trusted behavioral model for MULT18X18D; blackboxes were not treated as simulated hardware.",
+  "simulation_cycles": 12029,
+  "backpressure_cycles": 227,
+  "first_latency_cycles": 50,
+  "tool_versions": {
+    "yosys": "Yosys 0.70+219 (git sha1 5053d0e26, Release, Clang /usr/local/osxcross/target/bin/aarch64-apple-darwin25.5-clang++ 21.1.8)",
+    "iverilog": "Icarus Verilog version 14.0 (devel) (s20260301-670-g2b8d42dc0-dirty)"
+  }
+}

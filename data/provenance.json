@@ -1,0 +1,10 @@
+{
+  "url": "https://archive.ics.uci.edu/static/public/267/banknote+authentication.zip",
+  "archive_sha256": "1e2acd9a2085fadf3d8145c12d3d22af853320d52294a6590c2eaf75fdc05227",
+  "archive_bytes": 46562,
+  "csv_sha256": "d0539aaed2139ba7a587b3e34fb345ce503ff7d5d33dbf9912d8e195ce425cb9",
+  "csv_bytes": 46400,
+  "source_member": "data_banknote_authentication.txt",
+  "license": "CC-BY-4.0",
+  "citation": "Lohweg, V. (2012). Banknote Authentication [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C55P57."
+}

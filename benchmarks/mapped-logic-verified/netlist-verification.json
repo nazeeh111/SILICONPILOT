@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "rtl_sha256": "e4cf0ed5bb1cbbfcb3a070bc98fd0541d17f80541cc163f9ccee55a451c6c13b",
+  "expected_sha256": "ac663305c3a3fd1b824ce3cd9b568b9bcb9ad05ec95dea401fbbe1c6e9eb65e5",
+  "inputs_sha256": "71b41b216f8ac48e66205bb0bad035756b5f3df4335f23784eb3758819945c7c",
+  "testbench_sha256": "cb41c1ed59ea8f3e33655a760805867066551557eaf7df05fcd6cc7599cdd100",
+  "mapped_netlist_sha256": "ea4466f271d7ac2e25fb327867abf60948248cc1edc9f8e60e3b67f7bc41cc42",
+  "samples": 353,
+  "mapped_simulation_available": true,
+  "unsupported_mapped_primitives": [],
+  "limitations": "Zero-delay digital functional simulation; no routed delays, IO electrical validation, physical FPGA measurement, or arbitrary-input equivalence proof.",
+  "commands": [
+    [
+      "/private/tmp/siliconpilot-tools/oss-cad-suite/bin/iverilog",
+      "-g2012",
+      "-s",
+      "tb",
+      "-I",
+      "/private/tmp/siliconpilot-tools/oss-cad-suite/share/yosys/ecp5",
+      "-o",
+      "simulation",
+      "/private/tmp/siliconpilot-tools/oss-cad-suite/share/yosys/ecp5/cells_sim.v",
+      "/Users/nazeeh/Documents/Codex/2026-10-25/go-2/outputs/SILICONPILOT/benchmarks/mapped-logic-verified/synthesized.v",
+      "tb_streaming.v"
+    ],
+    [
+      "/private/tmp/siliconpilot-tools/oss-cad-suite/bin/vvp",
+      "simulation"
+    ]
+  ],
+  "scope": "exact mapped ECP5 netlist",
+  "mapped_simulation_passed": true,
+  "behavioral_libraries": {
+    "cells_sim.v": "26a9e84042ec9f5ecbbe1dcacc34e610c0cadfe9a83d52193a6d2be83191f11d",
+    "ccu2c_sim.vh": "178b1310b2e70768114e1c795118529055799df1ad650a09d0613b3856a81ccc",
+    "common_sim.vh": "3d55fcb1b659f9a99e081d0e8cd3e0a74fb8d659644103db9ad10b04a64ce75d"
+  },
+  "simulation_cycles": 12029,
+  "backpressure_cycles": 227,
+  "first_latency_cycles": 50,
+  "tool_versions": {
+    "yosys": "Yosys 0.70+219 (git sha1 5053d0e26, Release, Clang /usr/local/osxcross/target/bin/aarch64-apple-darwin25.5-clang++ 21.1.8)",
+    "iverilog": "Icarus Verilog version 14.0 (devel) (s20260301-670-g2b8d42dc0-dirty)"
+  }
+}

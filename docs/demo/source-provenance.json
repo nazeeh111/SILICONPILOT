@@ -1,0 +1,59 @@
+{
+  "scope": "authentic current local app captures and measured-corpus snapshot",
+  "corpus_records": 40,
+  "comparison_ids": [
+    "w8-c16",
+    "w8-c22"
+  ],
+  "files": [
+    {
+      "path": "benchmarks/corpus.json",
+      "sha256": "29b8df9f8a45749c0e33e47b32e27aa9a0a1adcc035d62620cfe90ae0eceab9e"
+    },
+    {
+      "path": "observatory/index.html",
+      "sha256": "2e8f34184691e531edd9afaf197abd30845a12d47bea58dc7754c1ae1a286798"
+    },
+    {
+      "path": "observatory/style.css",
+      "sha256": "02ccff9ccc4a9decbbdae90f7e268520c93c9064e547c782408198cfd12045e0"
+    },
+    {
+      "path": "observatory/app.js",
+      "sha256": "0d4743b2463423879e14eb28eabed9c722da702ea67d71dabc2e7c6b5a1993fb"
+    },
+    {
+      "path": "observatory/data/observatory.json",
+      "sha256": "c921b6383b75c351a6f31f9fd5f02d06dfa6cb9b6fbba6f219990d79fbc8549d"
+    },
+    {
+      "path": "benchmarks/runs/w8-c16/design.v",
+      "sha256": "6e8d72e48171537a85af2e80ff201ec687124b4625f7f312b12d65c7dd46dc57"
+    },
+    {
+      "path": "docs/media/pareto.png",
+      "sha256": "9ffcb1be89114f0b64797d2ab73f381fba2a582b70632b10199f918dd6b319ff"
+    },
+    {
+      "path": "docs/media/constrained-pareto.png",
+      "sha256": "2baffd110094f6a10ffe3f337af14b7930e477c71326008db9b32e4bba0502c3"
+    },
+    {
+      "path": "docs/media/verification.png",
+      "sha256": "a72d07ad43fceebbe24eec69b77875234f4a512cf5993365aab4655281df0b50"
+    },
+    {
+      "path": "docs/media/waveform.png",
+      "sha256": "fd623228a162fedc172962e9742a363b2907fea92c8438ddd8686fda53ac926f"
+    },
+    {
+      "path": "docs/media/hdl.png",
+      "sha256": "926630221cba693ab8c7779d310fe6ce584f0461bf632c9a7564ef49b2aef709"
+    }
+  ],
+  "gsap": {
+    "version": "3.14.2",
+    "license": "https://gsap.com/standard-license",
+    "usage": "free local animation runtime; original header retained"
+  }
+}

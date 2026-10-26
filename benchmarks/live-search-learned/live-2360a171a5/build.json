@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "target": {
+    "family": "ECP5",
+    "device": "LFE5U-25F",
+    "package": "CABGA256",
+    "speed": "6"
+  },
+  "clock_mhz": 25.0,
+  "rtl_sha256": "39b2aaefe8e767631146138daf25a2aca3101c34461538eb7f0a4669d12a7299",
+  "model_sha256": "aa76f9dd3484b9453e97719de2284edcb9400c2b78f41b8b9e2d99bd04dd2f53",
+  "config": {
+    "bits": 8,
+    "fractional_bits": 5,
+    "accumulator_bits": 24,
+    "parallelism": 4,
+    "pipeline": true,
+    "buffering": 1
+  },
+  "dimensions": [
+    4,
+    8,
+    2
+  ],
+  "lut": 1807,
+  "logic_lut": 1033,
+  "carry_lut": 774,
+  "lut_scope": "Mapped LUT4 equivalents: logic LUT4 + 2 per CCU2C carry cell; mux primitives reported separately in cell_counts.",
+  "ff": 581,
+  "dsp": 8,
+  "bram": 0,
+  "cell_counts": {
+    "$scopeinfo": 3,
+    "TRELLIS_FF": 581,
+    "PFUMX": 168,
+    "LUT4": 1033,
+    "CCU2C": 387,
+    "L6MUX21": 7,
+    "MULT18X18D": 8
+  },
+  "synthesis_seconds": 4.831013084040023,
+  "route_seconds": 0.0,
+  "compile_seconds": 4.831013084040023,
+  "routed": false,
+  "latency_cycles": 25,
+  "initiation_interval_cycles": 18,
+  "latency_us": 1.0,
+  "core_throughput_estimate_per_s": 1388888.888888889,
+  "throughput_scope": "Analytic core initiation-interval bound; excludes streaming-shell serialization, stalls, and physical IO.",
+  "measurement_scope": "core simulated cycle model; Yosys mapped cells; nextpnr device timing estimate when routed. No physical FPGA measurement.",
+  "io_constraints": "Unconstrained board pins auto-assigned by nextpnr; not a board-ready programming image. Clock constrained; external IO delays unspecified.",
+  "tool_versions": {
+    "yosys": "Yosys 0.70+219 (git sha1 5053d0e26, Release, Clang /usr/local/osxcross/target/bin/aarch64-apple-darwin25.5-clang++ 21.1.8)"
+  },
+  "commands": [
+    [
+      "/private/tmp/siliconpilot-tools/oss-cad-suite/bin/yosys",
+      "-s",
+      "synth.ys"
+    ]
+  ],
+  "budget_exhausted_before_route": false,
+  "artifacts": {
+    "design.v": {
+      "bytes": 9966,
+      "sha256": "39b2aaefe8e767631146138daf25a2aca3101c34461538eb7f0a4669d12a7299"
+    },
+    "weights.json": {
+      "bytes": 1390,
+      "sha256": "35952a3ab4ed8355234b19da0330f45031748657af6299f3c3a900b525c8596c"
+    },
+    "manifest.json": {
+      "bytes": 1368,
+      "sha256": "035fe724f08bebffe53bbc0675979c0e0e4d33b1a9b4b0c710be584748f56cc2"
+    },
+    "synth.ys": {
+      "bytes": 156,
+      "sha256": "06ee2f4de53a02945e06548dcf398f3965477a7bbe34bb1c2804608bd942e762"
+    },
+    "synthesized.json": {
+      "bytes": 3857758,
+      "sha256": "2b3aa2b5819ae5b77107d16d9e86339dec2cb8cf58bdea4c42fd22ca103ab4ae"
+    },
+    "synthesized.v": {
+      "bytes": 1584345,
+      "sha256": "2bd30dc4601a350f7812d7db99ec3ec5157f1ae6b6a77348ee4f898a133f7720"
+    },
+    "synthesis.log": {
+      "bytes": 396131,
+      "sha256": "67f23b197441dd19f7f4764eeeea569104f08a41ae1d34b11ff142d836f13501"
+    },
+    "synthesis-stat.json": {
+      "bytes": 1497,
+      "sha256": "a9d2ea317b93ec3ea2b38647f475836222953192cb6076321c9341ba230e898c"
+    }
+  }
+}

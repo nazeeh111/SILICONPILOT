@@ -1,0 +1,55 @@
+{
+  "passed": true,
+  "file": "brag.mp4",
+  "sha256": "805127a2b6fc28a4bdfef1f37aa43246cae385d228e9126be7705de255d64629",
+  "duration_seconds": 60.0,
+  "width": 1920,
+  "height": 1080,
+  "frame_rate": "30/1",
+  "frame_count": 1800,
+  "codec": "h264",
+  "pixel_format": "yuv420p",
+  "audio_tracks": 0,
+  "audio_intent": "intentional silence; no narration requested",
+  "full_ffmpeg_decode": "passed, no error output",
+  "poster": "brag.jpg",
+  "poster_baked_into_frame_zero": true,
+  "source_provenance": "source-provenance.json",
+  "visual_review": {
+    "times_seconds": [
+      3,
+      10,
+      20,
+      31,
+      40,
+      45,
+      51,
+      58
+    ],
+    "checks": [
+      "genuine app captures match frozen measurements",
+      "readable display text and measurement callouts",
+      "scene crossfades and settled holds",
+      "no clipping of essential copy",
+      "real-source chart coordinates",
+      "explicit simulation/routing estimate scope"
+    ],
+    "status": "passed: inspected fresh representative frames from final successful render",
+    "transition_times_seconds": [
+      6.25,
+      15.25,
+      26.25,
+      37.25,
+      42.75,
+      48.25,
+      55.25
+    ]
+  },
+  "automated_motion_analysis": "unavailable: installed local check disables motion module; animation-map helper lacks @hyperframes/producer. Representative video frames and transitions reviewed manually.",
+  "poster_frame_zero_ssim": 0.996162,
+  "composition_sha256": "5c7064dc98322d087bb29028aac8fb48fca3d49dd6b130e4ccf6a8bd59ab1281",
+  "hyperframes_checks": [
+    "hyperframes-check.json",
+    "hyperframes-chart-check.json"
+  ]
+}

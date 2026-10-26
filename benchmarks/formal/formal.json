@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "method": "Yosys bounded SAT assertion proof",
+  "depth_cycles": 14,
+  "symbolic_input_bits": 6,
+  "input_combinations": 64,
+  "scope": "one documented representative 2\u21922\u21921 3-bit dense/ReLU circuit, all input bit patterns; synchronous initial reset, non-vacuous completion, exact arithmetic and held output throughout bounded depth",
+  "limitations": "Does not prove arbitrary models, reset sequences, or implementation timing. General generated circuits are independently simulated.",
+  "rtl_sha256": "2db60e3a4518691cfeb2ce1a6de2fb1a5ccb97b710eaa385acfabec8a272742e",
+  "tool_version": "Yosys 0.70+219 (git sha1 5053d0e26, Release, Clang /usr/local/osxcross/target/bin/aarch64-apple-darwin25.5-clang++ 21.1.8)",
+  "log": "formal.log"
+}

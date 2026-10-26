@@ -1,0 +1,43 @@
+{
+  "name": "formal-tiny",
+  "input_size": 2,
+  "layers": [
+    {
+      "weights": [
+        [
+          3,
+          -4
+        ],
+        [
+          -4,
+          3
+        ]
+      ],
+      "bias": [
+        5,
+        -5
+      ],
+      "relu": true
+    },
+    {
+      "weights": [
+        [
+          3,
+          -4
+        ]
+      ],
+      "bias": [
+        1
+      ],
+      "relu": false
+    }
+  ],
+  "config": {
+    "bits": 3,
+    "fractional_bits": 1,
+    "accumulator_bits": 6,
+    "parallelism": 1,
+    "pipeline": false,
+    "buffering": 1
+  }
+}

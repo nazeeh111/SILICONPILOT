@@ -1,0 +1,2 @@
+# Device-level research build. Board pin assignment intentionally unspecified.
+FREQUENCY PORT "clk" 25 MHz;

@@ -1,0 +1,2 @@
+# Device-level research route; auto-assigned pins; external IO delays unspecified.
+FREQUENCY PORT "clk" 25 MHz;
