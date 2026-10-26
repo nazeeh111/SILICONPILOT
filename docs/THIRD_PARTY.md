@@ -27,18 +27,6 @@ Suggested citation:
 
 Package-specific wheels and OSS CAD Suite bundles may include additional third-party components and notices. Installation pins and build manifests identify the actual versions used; this table does not stand in for those manifests.
 
-## Investigated foundations, no vendored code
-
-| Foundation | License | Status |
-| --- | --- | --- |
-| [hls4ml](https://github.com/fastmachinelearning/hls4ml/blob/main/LICENSE) | Apache-2.0 | Research reference; no converter code copied. |
-| [Amaranth](https://github.com/amaranth-lang/amaranth/blob/main/LICENSE.txt) | BSD-2-Clause | Evaluated hardware construction alternative; no code copied. |
-| [BoTorch](https://github.com/meta-pytorch/botorch/blob/main/LICENSE) | MIT | Bayesian optimization reference; no requirement to install it for the documented small baseline. |
-| [SNAC-Pack / nac-opt](https://github.com/fastmachinelearning/nac-opt/blob/main/LICENSE) | Apache-2.0 | Related work; no source or pretrained models copied. |
-| [PaperVizAgent](https://github.com/google-research/papervizagent) | Apache-2.0 | Investigated; model API workflow not used. |
-
-Research papers are cited through links in [research.md](research.md); linking and scholarly attribution do not grant a license to reproduce their figures. All project-specific diagrams should be authored locally, with data charts drawn from this project's retained benchmark records.
-
 ## Demo composition
 
 The editable Hyperframes demonstration includes GSAP 3.14.2, with its upstream license header retained in `docs/demo/composition/assets/gsap.min.js`. GSAP uses the free [Standard License](https://gsap.com/standard-license), which is distinct from SILICONPILOT's Apache-2.0 license. No paid API, narration service or purchased media was used. Genuine application screenshots and original technical graphics are generated from this project.

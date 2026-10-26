@@ -37,7 +37,7 @@ The 24-design main-topology replay gives every method a 630.7-second FPGA-tool b
 
 LUT budgets count mapped LUT4 equivalents, including two LUTs per CCU2C carry cell. Logic-only LUT4, carry LUT4, flip-flops, DSPs, block memories and routed TRELLIS_COMB utilization are retained separately. These resource definitions matter when comparing designs.
 
-Learning FPGA costs and surrogate-assisted design search are established research. This project's contribution is an original, cohesive open-ECP5 implementation, measured experiment corpus, inspectable evidence, and a tested cost/fidelity selection policy. It does not claim the first such method or universal superiority. [Relevant prior art](docs/research.md) includes hls4ml, BoTorch, SNAC-Pack and distributed-arithmetic compilers.
+Learning FPGA costs and surrogate-assisted design search are established research. SILICONPILOT combines an open ECP5 implementation, measured experiments, inspectable artifacts and a tested cost/fidelity selection policy. [Research context](docs/research.md) describes established methods and limits.
 
 ## Reproduce
 
