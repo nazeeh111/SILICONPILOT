@@ -41,11 +41,30 @@ Learning FPGA costs and surrogate-assisted design search are established researc
 
 ## Reproduce
 
-Python 3.12 and [OSS CAD Suite](https://github.com/YosysHQ/oss-cad-suite-build/releases/tag/2026-10-25) are required for the complete workflow. The compiler alone emits HDL without an FPGA toolchain. Training/search additionally use NumPy/SciPy/scikit-learn. No GPU, API key, proprietary HLS tool or paid service is required.
+### Generate your first Verilog without installing
+
+On macOS or Linux, the compiler can run directly from source with Python
+3.12–3.14 and no third-party packages or FPGA toolchain:
 
 ```bash
 git clone https://github.com/nazeeh111/SILICONPILOT.git
 cd SILICONPILOT
+PYTHONPATH=src python3 -m siliconpilot.cli compile models/banknote_4x8x2.json \
+  --out work/first-design
+```
+
+Open `work/first-design/design.v` to inspect the generated dense stages and
+streaming interface. `weights.json` contains the quantized model;
+`manifest.json` records the configuration, arithmetic rules and file identity.
+Choose a new output directory: compiling again into the same directory replaces
+these three generated files. This command generates RTL; it does not simulate,
+synthesize or route it. Continue below for those checks.
+
+### Verify, synthesize and search
+
+From the same source checkout, Python 3.12 and [OSS CAD Suite](https://github.com/YosysHQ/oss-cad-suite-build/releases/tag/2026-10-25) are required for the complete workflow. The compiler alone emits HDL without an FPGA toolchain. Training/search additionally use NumPy/SciPy/scikit-learn. No GPU, API key, proprietary HLS tool or paid service is required.
+
+```bash
 python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements-lock.txt
