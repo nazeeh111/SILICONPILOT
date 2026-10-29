@@ -76,6 +76,8 @@ def serve(root: str | Path,port: int=8791) -> None:
                 if not 0<size<=65536:
                     raise ValueError('JSON request must be 1–65536 bytes')
                 data=json.loads(self.rfile.read(size))
+                if not isinstance(data,dict):
+                    raise ValueError('JSON object required')
                 model_id=data.get('model_id','banknote-4x8x2')
                 paths={f'banknote-4x{w}x2':root/f'models/banknote_4x{w}x2.json' for w in (4,8,12)}
                 if model_id not in paths:
