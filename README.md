@@ -1,12 +1,31 @@
-<p align="center"><img src="docs/assets/banner.svg" alt="SILICONPILOT: from a neural model to inspectable silicon tradeoffs" width="100%"></p>
+# SiliconPilot
 
-# SILICONPILOT
+**Compile a small neural classifier into inspectable Verilog.**
 
-**A working ML-to-FPGA co-design laboratory, with the evidence attached.** Compile small dense/ReLU classifiers into fixed-point Verilog, independently test their arithmetic and handshakes, synthesize and route them for an ECP5, then learn which designs deserve the next expensive compilation.
+Choose fixed-point arithmetic and a hardware schedule, verify the generated circuit, and compare measured ECP5 implementation costs. The local observatory connects each design to its HDL, waveforms and evidence.
 
-[Hardware Design Observatory](https://nazeeh111.github.io/SILICONPILOT/) · [Arithmetic contract](docs/arithmetic.md) · [Research and prior art](docs/research.md) · [Search method](docs/search.md) · [Dataset](docs/dataset.md) · [Release](https://github.com/nazeeh111/SILICONPILOT/releases)
+[Open recorded designs](https://nazeeh111.github.io/SILICONPILOT/) · [Generate your first Verilog](#generate-your-first-verilog-without-installing) · [Arithmetic contract](docs/arithmetic.md)
 
 <p align="center"><img src="docs/media/observatory.png" alt="Genuine Hardware Design Observatory displaying compiled candidates and their verification evidence" width="100%"></p>
+
+## Generate your first Verilog without installing
+
+On macOS or Linux, the compiler can run directly from source with Python
+3.12–3.14 and no third-party packages or FPGA toolchain:
+
+```bash
+git clone https://github.com/nazeeh111/SILICONPILOT.git
+cd SILICONPILOT
+PYTHONPATH=src python3 -m siliconpilot.cli compile models/banknote_4x8x2.json \
+  --out work/first-design
+```
+
+Open `work/first-design/design.v` to inspect the generated dense stages and
+streaming interface. `weights.json` contains the quantized model;
+`manifest.json` records the configuration, arithmetic rules and file identity.
+Choose a new output directory: compiling again into the same directory replaces
+these three generated files. This command generates RTL; it does not simulate,
+synthesize or route it. Continue below for those checks.
 
 ## What works
 
@@ -25,6 +44,8 @@ The film uses real application captures and measured designs. Changing the LUT b
 
 ## Evidence and scope
 
+[Research and prior art](docs/research.md) · [Search method](docs/search.md) · [Dataset protocol](docs/dataset.md) · [Release](https://github.com/nazeeh111/SILICONPILOT/releases)
+
 The canonical measured corpus is [benchmarks/corpus.json](benchmarks/corpus.json), with per-candidate HDL, logs and reports under [benchmarks/runs](benchmarks/runs). The [benchmark report](docs/benchmarks.md) gives current measurements, baseline results, held-out topology errors and ablations, including negative results.
 
 The first corpus contains **40 RTL-verified, synthesized and routed designs** across hidden widths 4, 8 and 12. A separate LUT-only ECP5 implementation also passed exact mapped-netlist simulation on 353 vectors. The default DSP implementations have an explicitly documented simulation-model limitation. See [post-synthesis verification](docs/netlist.md).
@@ -37,28 +58,9 @@ The 24-design main-topology replay gives every method a 630.7-second FPGA-tool b
 
 LUT budgets count mapped LUT4 equivalents, including two LUTs per CCU2C carry cell. Logic-only LUT4, carry LUT4, flip-flops, DSPs, block memories and routed TRELLIS_COMB utilization are retained separately. These resource definitions matter when comparing designs.
 
-Learning FPGA costs and surrogate-assisted design search are established research. SILICONPILOT combines an open ECP5 implementation, measured experiments, inspectable artifacts and a tested cost/fidelity selection policy. [Research context](docs/research.md) describes established methods and limits.
+Learning FPGA costs and surrogate-assisted design search are established research. SiliconPilot combines an open ECP5 implementation, measured experiments, inspectable artifacts and a tested cost/fidelity selection policy. [Research context](docs/research.md) describes established methods and limits.
 
 ## Reproduce
-
-### Generate your first Verilog without installing
-
-On macOS or Linux, the compiler can run directly from source with Python
-3.12–3.14 and no third-party packages or FPGA toolchain:
-
-```bash
-git clone https://github.com/nazeeh111/SILICONPILOT.git
-cd SILICONPILOT
-PYTHONPATH=src python3 -m siliconpilot.cli compile models/banknote_4x8x2.json \
-  --out work/first-design
-```
-
-Open `work/first-design/design.v` to inspect the generated dense stages and
-streaming interface. `weights.json` contains the quantized model;
-`manifest.json` records the configuration, arithmetic rules and file identity.
-Choose a new output directory: compiling again into the same directory replaces
-these three generated files. This command generates RTL; it does not simulate,
-synthesize or route it. Continue below for those checks.
 
 ### Verify, synthesize and search
 
