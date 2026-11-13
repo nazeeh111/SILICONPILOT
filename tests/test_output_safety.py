@@ -1,10 +1,12 @@
 import contextlib
 import hashlib
+import importlib.util
 import io
 import json
 import os
 from pathlib import Path
 import subprocess
+import shutil
 import sys
 import tempfile
 import types
@@ -16,6 +18,8 @@ FIXTURE = (ROOT / 'models/banknote_4x8x2.json').read_bytes()
 ENV = dict(os.environ, PYTHONPATH=str(ROOT / 'src'))
 sys.path.insert(0, str(ROOT / 'src'))
 from siliconpilot.model import HardwareConfig
+
+SEARCH_DEPS = all(importlib.util.find_spec(name) is not None for name in ('numpy', 'scipy', 'sklearn', 'joblib'))
 
 
 def first_candidate():
@@ -351,6 +355,75 @@ class OutputSafetyTests(unittest.TestCase):
                     cli.main()
             self.assertEqual(model.read_bytes(), FIXTURE)
             self.assertEqual(corpus.read_text(), '[]')
+
+
+@unittest.skipUnless(SEARCH_DEPS, 'requires the project scientific dependencies')
+class RealDependencyCLITests(unittest.TestCase):
+    def test_replay_runs_with_safe_corpus_in_output_directory(self):
+        records = [{'id': f'test{i}', 'model_id': 'test', 'dimensions': [4, 8, 2],
+                    'config': {'bits': 8, 'fractional_bits': 5, 'accumulator_bits': 24,
+                               'parallelism': i+1, 'pipeline': False, 'buffering': 1},
+                    'accuracy': .96+i*.001, 'latency_cycles': 100-i*10,
+                    'lut': 200+i*80, 'ff': 100+i*10, 'fmax_mhz': 50.,
+                    'synthesis_seconds': 2., 'route_seconds': 3.,
+                    'verified': True, 'routed': True} for i in range(6)]
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            corpus = out / 'my-corpus.json'
+            original = json.dumps(records)
+            corpus.write_text(original)
+            result = subprocess.run(['python3', '-m', 'siliconpilot.cli', 'replay',
+                                     '--corpus', str(corpus), '--out', str(out),
+                                     '--seeds', '1', '--train-model-id', 'test',
+                                     '--min-accuracy', '.9', '--budget-seconds', '10'],
+                                    env=ENV, capture_output=True, text=True, timeout=120)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(corpus.read_text(), original)
+            self.assertTrue((out / 'surrogate.joblib').is_file())
+            self.assertEqual(json.loads((out / 'experiments.json').read_text())['model_id'], 'test')
+
+    def test_search_runs_real_optimizer_with_safe_model_and_validation(self):
+        from siliconpilot import cli
+        import siliconpilot.toolchain as backend
+        import siliconpilot.verification as verifier
+        model_data = {'name': 'tiny', 'input_size': 1,
+                      'layers': [{'op': 'dense', 'weights': [[.5]], 'bias': [0.]}]}
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            model = out / 'model-input.json'
+            model.write_text(json.dumps(model_data))
+            validation = out / 'validation-input.json'
+            validation.write_text(json.dumps({'inputs': [[0.]], 'labels': [0]}))
+            model_before, validation_before = model.read_bytes(), validation.read_bytes()
+            def build(model, config, directory, route=True, **kwargs):
+                return {'lut': 100, 'ff': 50, 'synthesis_seconds': .1,
+                        'route_seconds': .2 if route else 0., 'compile_seconds': .3 if route else .1,
+                        'routed': route, 'fmax_mhz': 50., 'dsp': 0, 'bram': 0}
+            argv = ['siliconpilot', 'search', str(model), '--out', str(out),
+                    '--validation-data', str(validation), '--evaluations', '1',
+                    '--min-accuracy', '.1', '--max-latency-us', '100']
+            with patch.object(verifier, 'verify_model', return_value={'passed': True}), \
+                 patch.object(backend, 'run_build', side_effect=build), \
+                 patch.object(sys, 'argv', argv), contextlib.redirect_stdout(io.StringIO()):
+                cli.main()
+            self.assertEqual(model.read_bytes(), model_before)
+            self.assertEqual(validation.read_bytes(), validation_before)
+            self.assertEqual(json.loads((out / 'live-search.json').read_text())['model_id'], 'tiny')
+
+    @unittest.skipUnless((ROOT / 'data/banknote.csv').is_file(), 'requires the packaged dataset')
+    def test_train_runs_with_copied_dataset_in_disposable_root(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'data').mkdir()
+            source = root / 'data/banknote.csv'
+            shutil.copyfile(ROOT / 'data/banknote.csv', source)
+            original = source.read_bytes()
+            result = subprocess.run(['python3', '-m', 'siliconpilot.cli', '--root', str(root), 'train'],
+                                    env=ENV, capture_output=True, text=True, timeout=180)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(source.read_bytes(), original)
+            self.assertTrue((root / 'models/banknote_4x8x2.json').is_file())
+            self.assertTrue((root / 'models/dataset_manifest.json').is_file())
 
 
 if __name__ == '__main__':
