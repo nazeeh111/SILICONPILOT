@@ -455,7 +455,7 @@ def optimize(model: Mapping[str,Any], configs: Sequence[Any], root: str | Path, 
     from .model import HardwareConfig, validate_model
     from .toolchain import run_build
     from .verification import verify_model
-    import hashlib
+    from .search_identity import live_candidate_id
 
     if max_evaluations < 1 or not math.isfinite(budget_seconds) or budget_seconds <= 0:
         raise ValueError("max_evaluations and budget_seconds must be positive")
@@ -469,7 +469,7 @@ def optimize(model: Mapping[str,Any], configs: Sequence[Any], root: str | Path, 
     configuration: dict[str,HardwareConfig] = {}
     for c in configs:
         cfg = c if isinstance(c,HardwareConfig) else HardwareConfig.from_dict(c)
-        ident = "live-"+hashlib.sha256(json.dumps(cfg.to_dict(),sort_keys=True).encode()).hexdigest()[:10]
+        ident = live_candidate_id(cfg)
         if ident in configuration:
             continue
         directory = out/ident
