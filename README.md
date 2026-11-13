@@ -27,6 +27,10 @@ Choose a new output directory: compiling again into the same directory replaces
 these three generated files. This command generates RTL; it does not simulate,
 synthesize or route it. Continue below for those checks.
 
+The CLI refuses when an input aliases a file it would generate, including through
+symbolic or hard links. Keep inputs and outputs stable while a command runs;
+the check does not guard against concurrent path changes.
+
 ## What works
 
 - **A small, explicit compiler.** Fixed-shape dense layers and ReLU, signed 3–16-bit arithmetic, configurable fractional/accumulator widths, multiplier lanes, product registers and buffering. Unsupported operations and malformed models fail clearly.

@@ -2,6 +2,7 @@
 from __future__ import annotations
 import argparse
 import json
+import os
 from pathlib import Path
 import shutil
 import sys
@@ -9,6 +10,7 @@ from typing import Any
 from . import __version__
 from .compiler import compile_model
 from .model import HardwareConfig, load_model
+from .search_identity import live_candidate_id
 
 
 def _hardware(parser: argparse.ArgumentParser) -> None:
@@ -27,6 +29,45 @@ def _config(args: Any) -> HardwareConfig:
     return HardwareConfig(bits=args.bits,fractional_bits=args.fractional_bits,
                           accumulator_bits=args.accumulator_bits,parallelism=args.parallelism,
                           pipeline=args.pipeline,buffering=args.buffering)
+
+
+def _build_output_names(command: str) -> set[str]:
+    names = {'design.v', 'weights.json', 'manifest.json'}
+    if command in ('verify', 'build'):
+        names.update({'inputs.hex', 'expected.hex', 'tb_core.v', 'tb_streaming.v',
+                      'sim_core', 'sim_streaming', 'core.log', 'streaming.log',
+                      'waveform.vcd', 'streaming.vcd', 'verification.json'})
+    if command == 'build':
+        names.update({'synth.ys', 'synthesized.json', 'synthesized.v', 'synthesis.log',
+                      'synthesis-stat.json', 'constraints.lpf', 'routing.json',
+                      'routing.log', 'routed.config', 'build.json'})
+    return names
+
+
+def _protect_inputs(destinations: list[Path], *inputs: Path | None) -> None:
+    for source in (path for path in inputs if path is not None):
+        for destination in destinations:
+            try:
+                if destination.samefile(source):
+                    raise ValueError(f'Output {destination} would replace input {source}')
+            except FileNotFoundError:
+                pass
+
+
+def _protect_replace_target(destination: Path, *inputs: Path | None) -> None:
+    # replace() replaces a directory entry, not other hard links to its old inode.
+    target = destination.parent.resolve() / destination.name
+    for source in (path for path in inputs if path is not None):
+        current = source
+        for _ in range(41):
+            if current.parent.resolve() / current.name == target:
+                raise ValueError(f'Output {destination} would replace input path {source}')
+            if not current.is_symlink():
+                break
+            link = Path(os.readlink(current))
+            current = link if link.is_absolute() else current.parent / link
+        else:
+            raise ValueError(f'Too many symbolic links in input path: {source}')
 
 
 def parser() -> argparse.ArgumentParser:
@@ -85,12 +126,25 @@ def main() -> None:
                 sys.exit(1)
             return
         if args.command=='train':
+            destinations = [args.root / 'models' / f'banknote_4x{width}x2.json' for width in (4, 8, 12)]
+            destinations.append(args.root / 'models/dataset_manifest.json')
+            _protect_inputs(destinations, args.root / 'data/banknote.csv')
             from .dataset import train_models
             result=train_models(args.root)
         elif args.command=='formal':
             from .formal import prove_tiny
             result=prove_tiny(args.out)
         elif args.command=='netlist':
+            if args.logic_only_out is None:
+                source_names = ('design.v', 'synthesized.v', 'synthesized.json', 'build.json',
+                                'verification.json', 'manifest.json', 'tb_streaming.v',
+                                'inputs.hex', 'expected.hex')
+                output_names = ('tb_streaming.v', 'inputs.hex', 'expected.hex',
+                                'generic-synth.ys', 'generic-synthesized.v', 'generic-synthesis.log',
+                                'simulation', 'netlist-compile.log', 'netlist-simulation.log')
+                destinations = [args.directory / 'netlist-check' / name for name in output_names]
+                destinations.append(args.directory / 'netlist-verification.json')
+                _protect_inputs(destinations, *(args.directory / name for name in source_names))
             from .netlist import run_netlist_verification,prepare_logic_only_build
             directory=args.directory
             if args.logic_only_out:
@@ -98,6 +152,11 @@ def main() -> None:
                 directory=args.logic_only_out
             result=run_netlist_verification(directory)
         elif args.command in ('compile','verify','build'):
+            dataset_inputs = ((args.root / 'data/banknote.csv',
+                               args.root / 'models/dataset_manifest.json')
+                              if getattr(args, 'dataset', False) else ())
+            destinations = [args.out / name for name in _build_output_names(args.command)]
+            _protect_inputs(destinations, args.model, args.config, *dataset_inputs)
             model=load_model(args.model)
             cfg=_config(args)
             if args.command=='compile':
@@ -116,6 +175,20 @@ def main() -> None:
                     from .toolchain import run_build
                     result={'verification':verification,'build':run_build(model,cfg,args.out,route=not args.synthesis_only,clock_mhz=args.clock_mhz)}
         elif args.command in ('search','replay'):
+            if args.command == 'replay':
+                destinations = [args.out / name for name in
+                                ('surrogate.joblib', 'surrogate_metadata.json', 'experiments.json')]
+                _protect_inputs(destinations, args.corpus)
+            else:
+                configs=[HardwareConfig(bits=b,fractional_bits=b-3,accumulator_bits=2*b+8,parallelism=n,pipeline=pipe)
+                         for b in (4,6,8) for n in (1,2,4) for pipe in (False,True)]
+                ids = [live_candidate_id(cfg) for cfg in configs]
+                destinations = [args.out / 'live-search.json.tmp']
+                destinations += [args.out / ident / name for ident in ids for name in _build_output_names('build')]
+                dataset_inputs = ((args.root / 'data/banknote.csv', args.root / 'models/dataset_manifest.json')
+                                  if args.validation_data is None else ())
+                _protect_inputs(destinations, args.model, args.validation_data, *dataset_inputs)
+                _protect_replace_target(args.out / 'live-search.json', args.model, args.validation_data, *dataset_inputs)
             from .search import Budgets, optimize, run_experiments
             budgets=Budgets(min_accuracy=args.min_accuracy,max_lut=args.max_lut,max_latency_us=args.max_latency_us)
             if args.command=='replay':
@@ -125,8 +198,6 @@ def main() -> None:
                                        budget_seconds=args.budget_seconds,seeds=range(args.seeds),
                                        budgets=budgets,train_model_id=args.train_model_id)
             else:
-                configs=[HardwareConfig(bits=b,fractional_bits=b-3,accumulator_bits=2*b+8,parallelism=n,pipeline=pipe)
-                         for b in (4,6,8) for n in (1,2,4) for pipe in (False,True)]
                 callback=None
                 if args.validation_data:
                     from .model import quantize
