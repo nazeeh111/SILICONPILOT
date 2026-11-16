@@ -1565,3 +1565,43 @@ footer > a {
   }
 }
 @media(max-width:600px){.chart-wrap{overflow-x:auto}.chart-wrap svg{min-width:620px}.model-graph{overflow-x:auto}.model-graph svg{min-width:480px}}
+
+/* Read recorded evidence at its intended scale. */
+:root { --muted: #526157; }
+.metric-kicker, .summary-metrics small, .measurement-note,
+.plot-topline, .plot-caption, .range-ends, .candidate-metrics span,
+.candidate-metrics strong small, .throughput-note, .verification-tag,
+.verification-intro p, .verification-footnote, .history-note,
+.wave-controls, #wave-caption, .artifact-links, .experiment-meta p,
+.config-grid span, .dataflow-note, .tag, footer p { font-size: 12px; letter-spacing: normal; }
+.tick-label, .axis-label { font-size: 12px; fill: #526157; }
+.chart-wrap, .history-chart, .waveform-chart { overflow-x: auto; }
+.chart-wrap svg { min-width: 760px; }
+.history-chart svg { min-width: 500px; }
+.waveform-chart svg { min-width: 950px; }
+.waveform-chart text { fill: #526157; }
+.waveform-chart text:not([font-size="7"]):not([font-size="8"]) { font-size: 12px; }
+.plot-scroll-hint { display: none; color: #526157; font-size: 12px; line-height: 1.6; padding: 0 20px; }
+@media (max-width: 1100px) { .plot-scroll-hint { display: block; } }
+.chart-wrap:focus-visible, .history-chart:focus-visible, .waveform-chart:focus-visible {
+  outline: 3px solid #a3381c; outline-offset: -3px;
+}
+.plot-point:focus-visible { stroke: #202927; stroke-width: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+.summary-strip small, .constraints > .muted, .slider-label,
+.compact-select, .compact-select select, .plot-topline select { font-size: 12px; }
+#candidate-name { overflow-wrap: anywhere; }
+.evidence-panel .panel-heading > div, .evidence-panel .panel-heading h2 { min-width: 0; }
+
+/* The dense trace keeps its geometry; the cursor snapshot carries full values. */
+.wave-values { border-top: 1px solid var(--line); padding: 20px; }
+.wave-values h3 { margin: 0 0 12px; font-size: 16px; }
+.wave-values p { color: #526157; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
+.wave-values dl { margin: 16px 0 0; }
+.wave-values dl > div { padding: 12px 0; border-top: 1px solid var(--line); min-width: 0; }
+.wave-values dt { color: #526157; font-size: 14px; margin-bottom: 8px; overflow-wrap: anywhere; }
+.wave-values dd { margin: 0; min-width: 0; }
+.wave-values code { font: 16px/1.6 var(--mono); color: var(--ink); white-space: pre-wrap; overflow-wrap: anywhere; }

@@ -129,8 +129,8 @@
                 </select></label
               >
             </div>
-            <div
-              id="pareto-chart"
+            <p id="pareto-chart-scroll-hint" class="plot-scroll-hint">Scroll sideways to inspect the complete design plot.</p><div
+              id="pareto-chart" tabindex="0" role="region" aria-describedby="pareto-chart-scroll-hint"
               class="chart-wrap"
               aria-label="Selectable accelerator design chart"
             ></div>
@@ -235,7 +235,7 @@
               </div>
               <span class="tag" id="history-count">— EVALUATIONS</span>
             </div>
-            <div id="history-chart" class="history-chart"></div>
+            <p id="history-chart-scroll-hint" class="plot-scroll-hint">Scroll sideways to inspect the complete search plot.</p><div id="history-chart" tabindex="0" role="region" aria-describedby="history-chart-scroll-hint" class="history-chart"></div>
             <p id="history-note" class="muted history-note">
               Actual evaluated designs in recorded order. Search comparisons are
               reported in the reproducible benchmark artifacts.
@@ -342,7 +342,7 @@
                 ><label
                   ><span id="wave-position-label">Cycle</span>
                   <input
-                    id="wave-position"
+                    id="wave-position" aria-label="Recorded waveform cursor" aria-controls="wave-values waveform-chart" aria-describedby="wave-values-help"
                     type="range"
                     min="0"
                     max="1"
@@ -351,7 +351,12 @@
                 ><output id="wave-cycle">0</output>
               </div>
             </div>
-            <div id="waveform-chart" class="waveform-chart"></div>
+            <p id="waveform-chart-scroll-hint" class="plot-scroll-hint">Scroll sideways to inspect the recorded signal trace.</p><div id="waveform-chart" tabindex="0" role="region" aria-describedby="waveform-chart-scroll-hint" class="waveform-chart"></div><section id="wave-values" class="wave-values" aria-labelledby="wave-values-title" hidden>
+              <h3 id="wave-values-title">Values at the replay cursor</h3>
+              <p id="wave-values-context"></p>
+              <p id="wave-values-help">Complete raw values for the plotted signals. In VCD patterns, x means unknown and z means high impedance; neither is zero. Values wrap without truncation.</p>
+              <dl id="wave-values-list"></dl>
+            </section>
           </div>
           <div
             id="view-measurements"

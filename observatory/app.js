@@ -976,7 +976,37 @@ function stopWave() {
   state.timer = null;
   $("wave-play").textContent = "▶ Replay";
 }
+function renderWaveValues(w, length) {
+  const values = $("wave-values-list");
+  values.replaceChildren();
+  $("wave-values").hidden = true;
+  $("wave-values-context").textContent = "";
+  $("wave-position").removeAttribute("aria-valuetext");
+  if (!w || !length) return;
+  const position = w.cycles?.[state.frame] ?? state.frame;
+  const time = w.kind === "vcd" ? `VCD time ${position} (${w.time_unit || "file units"} units)` : `Cycle ${position}`;
+  $("wave-values-context").textContent = `${state.selected?.id || "Selected design"} · ${time} · sample ${state.frame + 1} of ${length}${w.truncated ? " · first 200 timestamps" : ""}`;
+  $("wave-position").setAttribute("aria-valuetext", time);
+  for (const signal of w.signals.slice(0, 12)) {
+    const row = document.createElement("div");
+    const name = document.createElement("dt");
+    name.textContent = signal.name + (Number.isInteger(signal.width) && signal.width > 0 ? ` · ${signal.width} bit${signal.width === 1 ? "" : "s"}` : "");
+    const value = document.createElement("dd");
+    const raw = document.createElement("code");
+    raw.textContent = signal.values?.[state.frame] == null ? "Not recorded" : String(signal.values[state.frame]);
+    value.append(raw);
+    row.append(name, value);
+    values.append(row);
+  }
+  $("wave-values").hidden = false;
+}
 function renderWave() {
+  renderWaveValues(null, 0);
+  $("wave-cycle").textContent = "—";
+  $("wave-caption").textContent = "No recorded waveform samples";
+  $("wave-position-label").textContent = "Position";
+  $("wave-position").max = 0;
+  $("wave-position").value = 0;
   const w = state.wave,
     wrap = $("waveform-chart");
   if (!w || !Array.isArray(w.signals) || !w.signals.length) {
@@ -992,12 +1022,18 @@ function renderWave() {
     200,
     Math.max(...w.signals.map((s) => s.values?.length || 0)),
   );
-  if (!length) return;
+  if (!length) {
+    wrap.innerHTML = empty("No waveform samples", "The attached trace contains no recorded signal values.");
+    $("wave-play").disabled = true;
+    $("wave-position").disabled = true;
+    return;
+  }
   state.frame = Math.min(state.frame, length - 1);
   $("wave-play").disabled = false;
   $("wave-position").disabled = false;
   $("wave-position").max = length - 1;
   $("wave-position").value = state.frame;
+  renderWaveValues(w, length);
   $("wave-cycle").textContent = w.cycles?.[state.frame] ?? state.frame;
   $("wave-position-label").textContent = w.kind === "vcd" ? "Time" : "Cycle";
   $("wave-caption").textContent =
