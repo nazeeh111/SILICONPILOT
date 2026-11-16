@@ -64,6 +64,7 @@ def run_build(model: Mapping[str, Any], config: HardwareConfig, output_dir: str 
     report: dict[str, Any] = {
         'schema_version': 1, 'target': manifest['target'], 'clock_mhz': clock_mhz,
         'rtl_sha256': manifest['rtl_sha256'], 'model_sha256': manifest['model_sha256'],
+        'schedule_revision': manifest['schedule_revision'],
         'config': config.to_dict(), 'dimensions': manifest['dimensions'],
         'lut': counts.get('LUT4', 0) + 2 * counts.get('CCU2C', 0),
         'logic_lut': counts.get('LUT4', 0), 'carry_lut': 2 * counts.get('CCU2C', 0),

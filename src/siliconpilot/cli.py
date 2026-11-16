@@ -14,12 +14,12 @@ from .search_identity import live_candidate_id
 
 
 def _hardware(parser: argparse.ArgumentParser) -> None:
-    parser.add_argument('--bits',type=int,default=8)
-    parser.add_argument('--fractional-bits',type=int,default=5)
-    parser.add_argument('--accumulator-bits',type=int,default=24)
-    parser.add_argument('--parallelism',type=int,default=1)
-    parser.add_argument('--pipeline',action='store_true')
-    parser.add_argument('--buffering',type=int,default=1)
+    parser.add_argument('--bits',type=int,default=8,help='Signed activation and weight width (3–16; default 8)')
+    parser.add_argument('--fractional-bits',type=int,default=5,help='Shared fixed-point fractional bits (default 5)')
+    parser.add_argument('--accumulator-bits',type=int,default=24,help='Signed accumulator width (default 24)')
+    parser.add_argument('--parallelism',type=int,default=1,help='Multiplier lanes per stage, bounded by input width (default 1)')
+    parser.add_argument('--pipeline',action='store_true',help='Register products and overlap issue with accumulation (default: off)')
+    parser.add_argument('--buffering',type=int,default=1,help='Input buffering: 1 direct or 2 with a two-vector FIFO (default 1)')
     parser.add_argument('--config',type=Path,help='HardwareConfig JSON; replaces individual flags')
 
 
@@ -36,7 +36,8 @@ def _build_output_names(command: str) -> set[str]:
     if command in ('verify', 'build'):
         names.update({'inputs.hex', 'expected.hex', 'tb_core.v', 'tb_streaming.v',
                       'sim_core', 'sim_streaming', 'core.log', 'streaming.log',
-                      'waveform.vcd', 'streaming.vcd', 'verification.json'})
+                      'waveform.vcd', 'streaming.vcd', 'verification.json',
+                      'tb_schedule.v', 'sim_schedule', 'schedule.log'})
     if command == 'build':
         names.update({'synth.ys', 'synthesized.json', 'synthesized.v', 'synthesis.log',
                       'synthesis-stat.json', 'constraints.lpf', 'routing.json',
@@ -82,8 +83,10 @@ def parser() -> argparse.ArgumentParser:
     netlist.add_argument('--logic-only-out',type=Path,help='Build a distinct ECP5 LUT-only variant with upstream simulation models')
     formal=sub.add_parser('formal',help='Prove the tiny bounded arithmetic/protocol example')
     formal.add_argument('--out',type=Path,required=True)
+    formal.add_argument('--pipeline',action='store_true',help='Prove the overlapped product-register schedule')
     for name in ('compile','verify','build'):
-        s=sub.add_parser(name)
+        help_text={'compile':'Generate HDL, weights and a schedule manifest', 'verify':'Generate and simulate against the integer reference', 'build':'Verify, synthesize and route an ECP5 design'}
+        s=sub.add_parser(name,help=help_text[name],description=help_text[name]+'. Output latency is core availability in clocks; serial transfers and stalls are separate.')
         s.add_argument('model',type=Path)
         s.add_argument('--out',type=Path,required=True)
         _hardware(s)
@@ -133,7 +136,7 @@ def main() -> None:
             result=train_models(args.root)
         elif args.command=='formal':
             from .formal import prove_tiny
-            result=prove_tiny(args.out)
+            result=prove_tiny(args.out,pipeline=args.pipeline)
         elif args.command=='netlist':
             if args.logic_only_out is None:
                 source_names = ('design.v', 'synthesized.v', 'synthesized.json', 'build.json',

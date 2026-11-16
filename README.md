@@ -8,6 +8,10 @@ Choose fixed-point arithmetic and a hardware schedule, verify the generated circ
 
 <p align="center"><img src="docs/media/observatory.png" alt="Genuine Hardware Design Observatory displaying compiled candidates and their verification evidence" width="100%"></p>
 
+The source checkout identifies itself as **0.1.1.dev0** and contains the updated
+pipeline schedule. The published [v0.1.0 release](https://github.com/nazeeh111/SILICONPILOT/releases/tag/v0.1.0)
+retains its original compiler and recorded artifacts; it is not rebuilt from this source.
+
 ## Generate your first Verilog without installing
 
 On macOS or Linux, the compiler can run directly from source with Python
@@ -24,8 +28,11 @@ Open `work/first-design/design.v` to inspect the generated dense stages and
 streaming interface. `weights.json` contains the quantized model;
 `manifest.json` records the configuration, arithmetic rules and file identity.
 Choose a new output directory: compiling again into the same directory replaces
-these three generated files. This command generates RTL; it does not simulate,
-synthesize or route it. Continue below for those checks.
+these three generated files. With the default one lane and no product register,
+the 4 → 8 → 2 model reports 49 clocks from core input acceptance to output
+availability, and a 34-clock sustained output interval. These are modeled core
+cycles, not serial transaction times or FPGA measurements. This command generates
+RTL; it does not simulate, synthesize or route it. Continue below for those checks.
 
 The CLI refuses when an input aliases a file it would generate, including through
 symbolic or hard links. Keep inputs and outputs stable while a command runs;
@@ -33,7 +40,7 @@ the check does not guard against concurrent path changes.
 
 ## What works
 
-- **A small, explicit compiler.** Fixed-shape dense layers and ReLU, signed 3–16-bit arithmetic, configurable fractional/accumulator widths, multiplier lanes, product registers and buffering. Unsupported operations and malformed models fail clearly.
+- **A small, explicit compiler.** Fixed-shape dense layers and ReLU, signed 3–16-bit arithmetic, configurable fractional/accumulator widths, multiplier lanes, overlapped product-register pipelines and buffering. Unsupported operations and malformed models fail clearly.
 - **Real circuits.** Deterministic HDL, quantized weights, manifests, independent integer-reference testbenches, ECP5 synthesis and device-level place-and-route. All core tools are free and run locally on a CPU.
 - **A measured search problem.** A random-forest cost surrogate, approximate uncertainty, two evaluation fidelities, live hardware search, and a standard Gaussian-process search baseline. Finite-corpus replays use the actual measured compilation costs.
 - **An inspectable application.** Configure hardware budgets, select candidates on the Pareto plot, inspect the model/dataflow, read generated HDL and verification evidence, and replay genuine VCD waveforms. Local mode compiles and verifies through the same Python core as the CLI.
@@ -53,6 +60,8 @@ The film uses real application captures and measured designs. Changing the LUT b
 The canonical measured corpus is [benchmarks/corpus.json](benchmarks/corpus.json), with per-candidate HDL, logs and reports under [benchmarks/runs](benchmarks/runs). The [benchmark report](docs/benchmarks.md) gives current measurements, baseline results, held-out topology errors and ablations, including negative results.
 
 The first corpus contains **40 RTL-verified, synthesized and routed designs** across hidden widths 4, 8 and 12. A separate LUT-only ECP5 implementation also passed exact mapped-netlist simulation on 353 vectors. The default DSP implementations have an explicitly documented simulation-model limitation. See [post-synthesis verification](docs/netlist.md).
+
+New manifests identify `overlapped-products-v2`. With `--pipeline`, registered products issue one group per clock across neuron boundaries. For the packaged 4 → 8 → 2 model at W8/F5/A24, `--parallelism 2 --pipeline` yields 27 clocks to core output availability and a 19-clock sustained output interval; the unflagged first compile above remains 49 and 34 clocks. These cycle counts exclude serial-shell transfers and stalls. The selected schedules were checked in RTL simulation. The recorded corpus uses the older alternating pipeline and is preserved as measured; rebuilding it requires fresh costs and timing. See [schedule semantics and compatibility](docs/arithmetic.md#recorded-design-compatibility).
 
 The 24-design main-topology replay gives every method a 630.7-second FPGA-tool budget over 10 seeds, after the same cheap accuracy/latency feasibility screen. Mean recovered reference tradeoff volume is **98.0% for the learned policy, 70.3% for random, 80.6% for GP optimization and 100% for the fixed sweep**. The fixed sweep also consumes less compilation time on average. The ablations and superseded unpruned protocol are retained; this small study does not establish broad superiority. The held-out cost model predicts LUTs better than a constant baseline but does not improve route-cost prediction, and its uncertainty intervals under-cover.
 
@@ -93,6 +102,7 @@ siliconpilot build models/banknote_4x8x2.json \
 # Fully modeled LUT-only ECP5 mapping, routing and post-synthesis simulation.
 siliconpilot netlist work/my-design --logic-only-out work/logic-only
 siliconpilot formal --out work/formal-tiny
+siliconpilot formal --pipeline --out work/formal-pipelined
 
 # The real compiler is available in the local app.
 siliconpilot serve --port 8791

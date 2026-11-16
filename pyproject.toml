@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "siliconpilot"
-version = "0.1.0"
+version = "0.1.1.dev0"
 description = "An inspectable ML-to-ECP5 hardware co-design laboratory"
 readme = "README.md"
 requires-python = ">=3.12,<3.15"

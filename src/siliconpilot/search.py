@@ -478,6 +478,7 @@ def optimize(model: Mapping[str,Any], configs: Sequence[Any], root: str | Path, 
         if not 0 <= accuracy <= 1:
             raise ValueError("accuracy_fn must return a validation fraction in [0,1]")
         pool.append({"id":ident,"model_id":model["name"],"dimensions":manifest["dimensions"],"config":cfg.to_dict(),
+                     "schedule_revision":manifest["schedule_revision"],"rtl_sha256":manifest["rtl_sha256"],
                      "accuracy":accuracy,"latency_cycles":manifest["latency_cycles"]})
         configuration[ident] = cfg
         directories[ident] = directory

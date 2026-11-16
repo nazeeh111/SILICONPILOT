@@ -1,8 +1,10 @@
 """Contract, arithmetic and real RTL regression tests."""
 import json
 import shutil
+import tomllib
 from pathlib import Path
 import pytest
+from siliconpilot import __version__
 from siliconpilot.model import HardwareConfig, load_model, quantize, validate_model
 from siliconpilot.reference import evaluate_float, evaluate_integer, quantize_input, saturate, wrap
 from siliconpilot.compiler import compile_model
@@ -65,6 +67,8 @@ def test_serialization_and_deterministic_generation(tmp_path):
     a=compile_model(m,c,tmp_path/'a')
     b=compile_model(m,c,tmp_path/'b')
     assert a==b
+    project = tomllib.loads((Path(__file__).resolve().parents[1]/'pyproject.toml').read_text())
+    assert a['compiler_version'] == __version__ == project['project']['version'] == '0.1.1.dev0'
     assert (tmp_path/'a'/'design.v').read_bytes()==(tmp_path/'b'/'design.v').read_bytes()
     assert a['latency_cycles']==7
     assert a['initiation_interval_cycles']==6
@@ -109,8 +113,9 @@ def test_three_stages_with_final_relu(tmp_path):
 
 
 @pytest.mark.skipif(not shutil.which('yosys'), reason='Yosys is required for bounded formal proof')
-def test_tiny_formal_proof(tmp_path):
+@pytest.mark.parametrize('pipeline', [False, True])
+def test_tiny_formal_proof(tmp_path,pipeline):
     from siliconpilot.formal import prove_tiny
-    report=prove_tiny(tmp_path)
+    report=prove_tiny(tmp_path,pipeline=pipeline)
     assert report['passed']
     assert report['input_combinations']==64

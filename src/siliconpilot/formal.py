@@ -12,12 +12,12 @@ from .compiler import compile_model
 from .model import HardwareConfig, quantize
 
 
-def prove_tiny(output_dir: str | Path) -> dict:
+def prove_tiny(output_dir: str | Path, *, pipeline: bool = False) -> dict:
     yosys=shutil.which('yosys')
     if not yosys:
         raise RuntimeError('formal proof requires yosys on PATH')
     directory=Path(output_dir).resolve();directory.mkdir(parents=True,exist_ok=True)
-    cfg=HardwareConfig(bits=3,fractional_bits=1,accumulator_bits=6,parallelism=1,pipeline=False,buffering=1)
+    cfg=HardwareConfig(bits=3,fractional_bits=1,accumulator_bits=6,parallelism=1,pipeline=pipeline,buffering=1)
     model={'name':'formal-tiny','input_size':2,'layers':[{'op':'dense','weights':[[1.5,-2.],[-2.,1.5]],'bias':[1.25,-1.25]},{'op':'relu'},{'op':'dense','weights':[[1.5,-2.]],'bias':[.25]}]}
     manifest=compile_model(model,cfg,directory)
     q=quantize(model,cfg)
@@ -78,6 +78,8 @@ endmodule
     (directory/'formal.log').write_text(log)
     success=proc.returncode==0 and 'SUCCESS' in log
     report={'passed':success,'method':'Yosys bounded SAT assertion proof','depth_cycles':depth,'symbolic_input_bits':6,'input_combinations':64,'scope':'one documented representative 2→2→1 3-bit dense/ReLU circuit, all input bit patterns; synchronous initial reset, non-vacuous completion, exact arithmetic and held output throughout bounded depth','limitations':'Does not prove arbitrary models, reset sequences, or implementation timing. General generated circuits are independently simulated.','rtl_sha256':manifest['rtl_sha256'],'tool_version':subprocess.run([yosys,'-V'],capture_output=True,text=True).stdout.strip(),'log':'formal.log'}
+    report['config'] = cfg.to_dict()
+    report['schedule_revision'] = manifest['schedule_revision']
     (directory/'formal.json').write_text(json.dumps(report,indent=2)+'\n')
     if not success:
         raise RuntimeError(f'Yosys formal proof failed; inspect {directory / "formal.log"}')

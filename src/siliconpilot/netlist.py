@@ -187,6 +187,7 @@ def prepare_logic_only_build(source_directory: str | Path, output_directory: str
         counts[cell["type"]] = counts.get(cell["type"], 0) + 1
     report: dict[str, Any] = {
         "schema_version": 1, "rtl_sha256": _hash(directory / "design.v"),
+        "schedule_revision": manifest.get("schedule_revision", "alternating-products-v1"),
         "mapping_policy": "synth_ecp5 -nodsp; multipliers implemented in LUT/carry logic",
         "model_sha256": manifest["model_sha256"], "target": manifest["target"], "config": manifest["config"],
         "dimensions": manifest["dimensions"], "clock_mhz": clock_mhz,

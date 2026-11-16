@@ -112,6 +112,86 @@ endmodule
 '''
 
 
+def _schedule_testbench(ni: int, no: int, bits: int, count: int, transactions: int,
+                        latency: int, interval: int) -> str:
+    """Measure continuous-traffic output spacing, independently of RTL internals."""
+    return f'''`timescale 1ns/1ps
+module tb;
+  localparam N={count}, RUN={transactions}, NI={ni}, NO={no}, W={bits};
+  reg clk=0; always #5 clk=!clk;
+  reg rst=1, in_valid=0;
+  reg [NI*W-1:0] in_data=0;
+  wire in_ready, out_valid;
+  wire [NO*W-1:0] out_data;
+  siliconpilot_core dut(.clk(clk),.rst(rst),.in_data(in_data),.in_valid(in_valid),
+    .in_ready(in_ready),.out_data(out_data),.out_valid(out_valid),.out_ready(1'b1));
+  reg [NI*W-1:0] input_vectors[0:N-1];
+  reg [NO*W-1:0] expected[0:N-1];
+  integer sent=0, received=0, cycles=0, first_sent=-1, previous_output=-1;
+  integer measured_latency=-1, measured_interval=-1;
+  initial begin
+    $readmemh("inputs.hex",input_vectors);
+    $readmemh("expected.hex",expected);
+    repeat(3) @(negedge clk);
+    rst=0;
+  end
+  always @(negedge clk) begin
+    if (!rst) begin
+      in_valid = sent < RUN;
+      if (sent < RUN) in_data = input_vectors[sent];
+    end
+  end
+  always @(posedge clk) begin
+    if (!rst) begin
+      cycles=cycles+1;
+      if (in_valid && in_ready) begin
+        if (sent==0) first_sent=cycles;
+        sent=sent+1;
+      end
+      if (out_valid) begin
+        if (received>=sent || out_data !== expected[received])
+          $fatal(1,"SCHEDULE_DATA_MISMATCH sample=%0d got=%h",received,out_data);
+        if (received==0) begin
+          measured_latency=cycles-first_sent-1;
+          if (measured_latency!={latency})
+            $fatal(1,"SCHEDULE_LATENCY got=%0d expected={latency}",measured_latency);
+        end else begin
+          measured_interval=cycles-previous_output;
+          if (measured_interval!={interval})
+            $fatal(1,"SCHEDULE_INTERVAL got=%0d expected={interval}",measured_interval);
+        end
+        previous_output=cycles;
+        received=received+1;
+      end
+      if (received==RUN && cycles-previous_output>{latency+interval}) begin
+        $display("SCHEDULE_PASS samples=%0d latency=%0d interval=%0d",received,measured_latency,measured_interval);
+        $finish;
+      end
+      if (cycles>{transactions*(latency+interval+4)}) $fatal(1,"SCHEDULE_TIMEOUT");
+    end
+  end
+endmodule
+'''
+
+
+def _simulate(directory: Path, name: str, testbench: str, iverilog: str, vvp: str) -> str:
+    (directory/f'tb_{name}.v').write_text(testbench)
+    commands = [[iverilog,'-g2012','-s','tb','-o',f'sim_{name}','design.v',f'tb_{name}.v'],
+                [vvp,f'sim_{name}']]
+    output = []
+    for command in commands:
+        try:
+            proc = subprocess.run(command,cwd=directory,text=True,capture_output=True,timeout=180)
+        except subprocess.TimeoutExpired as exc:
+            (directory/f'{name}.log').write_text('\n'.join(output) + '\n' + str(exc))
+            raise RuntimeError(f'{name} RTL verification timed out; see {name}.log') from exc
+        output.append(proc.stdout+proc.stderr)
+        (directory/f'{name}.log').write_text('\n'.join(output))
+        if proc.returncode:
+            raise RuntimeError(f'{name} RTL verification failed: {proc.stdout[-2000:]} {proc.stderr[-2000:]}')
+    return '\n'.join(output)
+
+
 def verify_model(model: Mapping[str, Any], config: HardwareConfig, output_dir: str | Path, vectors: Sequence[Sequence[int]] | None = None, *, random_count: int = 64, include_streaming: bool = True) -> dict[str, Any]:
     directory = Path(output_dir).resolve()
     manifest=compile_model(model,config,directory)
@@ -130,23 +210,26 @@ def verify_model(model: Mapping[str, Any], config: HardwareConfig, output_dir: s
     for streaming in ([False,True] if include_streaming else [False]):
         name='streaming' if streaming else 'core'
         tb=_testbench(ni,no,config.bits,len(samples),manifest['latency_cycles'],streaming)
-        (directory/f'tb_{name}.v').write_text(tb)
-        commands=[[iverilog,'-g2012','-s','tb','-o',f'sim_{name}','design.v',f'tb_{name}.v'],[vvp,f'sim_{name}']]
-        output=[]
-        for command in commands:
-            proc=subprocess.run(command,cwd=directory,text=True,capture_output=True,timeout=180)
-            output.append(proc.stdout+proc.stderr)
-            if proc.returncode:
-                (directory/f'{name}.log').write_text('\n'.join(output))
-                raise RuntimeError(f'{name} RTL verification failed: {proc.stdout[-2000:]} {proc.stderr[-2000:]}')
-        log='\n'.join(output)
-        (directory/f'{name}.log').write_text(log)
+        log=_simulate(directory,name,tb,iverilog,vvp)
         match=re.search(r'PASS samples=(\d+) cycles=(\d+) stalls=(\d+) first_latency=(-?\d+) reset_checks=(\d+)',log)
         if not match:
             raise RuntimeError(f'{name} simulation did not produce PASS evidence')
         results[name]={'passed':True,'samples':int(match[1]),'simulation_cycles':int(match[2]),'backpressure_cycles':int(match[3]),'first_latency_cycles':int(match[4]),'reset_assertion_checks':int(match[5]),'waveform':f'{"streaming" if streaming else "waveform"}.vcd','log':f'{name}.log'}
         if not streaming and int(match[4]) != manifest['latency_cycles']:
             raise RuntimeError(f'cycle model mismatch: expected {manifest["latency_cycles"]}, measured {match[4]}')
+    transactions = min(len(samples), 2*len(q['layers'])+8)
+    tb = _schedule_testbench(ni,no,config.bits,len(samples),transactions,
+                             manifest['latency_cycles'],manifest['initiation_interval_cycles'])
+    log = _simulate(directory,'schedule',tb,iverilog,vvp)
+    match = re.search(r'SCHEDULE_PASS samples=(\d+) latency=(\d+) interval=(\d+)',log)
+    if not match or int(match[1]) != transactions:
+        raise RuntimeError('schedule simulation did not produce complete matching sample evidence')
+    results['schedule'] = {'passed':True,'samples':int(match[1]),'latency_cycles':int(match[2]),
+                           'initiation_interval_cycles':int(match[3]),'log':'schedule.log',
+                           'scope':'continuous core input, always-ready output; every consecutive output interval and post-drain silence checked'}
     report={'schema_version':1,'passed':True,'samples':len(samples),'boundary_and_random_samples':len(samples)-(len(vectors) if vectors is not None else 0),'dataset_samples':len(vectors) if vectors is not None else 0,'latency_cycles':results['core']['first_latency_cycles'],'tests':['integer bit equality','boundary values','seeded random values','output stability under backpressure','reset with in-flight input and stalled completed output','packed core handshake']+(['streaming shell handshake and score ordering'] if include_streaming else []),'simulator':subprocess.run([iverilog,'-V'],capture_output=True,text=True).stdout.splitlines()[0],'results':results,'rtl_sha256':manifest['rtl_sha256']}
+    report['schedule_revision'] = manifest['schedule_revision']
+    report['initiation_interval_cycles'] = results['schedule']['initiation_interval_cycles']
+    report['tests'].append('continuous-traffic core latency and output interval')
     (directory/'verification.json').write_text(json.dumps(report,indent=2)+'\n')
     return report

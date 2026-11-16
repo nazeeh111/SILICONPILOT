@@ -92,7 +92,9 @@ class OutputSafetyTests(unittest.TestCase):
             self.assertEqual(model.read_bytes(), FIXTURE)
 
     def test_later_verify_and_build_outputs_checked_before_first_write(self):
-        for command, name in (('verify', 'inputs.hex'), ('build', 'routed.config')):
+        for command, name in (('verify', 'inputs.hex'), ('build', 'routed.config'),
+                              ('verify', 'tb_schedule.v'), ('verify', 'sim_schedule'),
+                              ('build', 'schedule.log')):
             with self.subTest(command=command), tempfile.TemporaryDirectory() as tmp:
                 out = Path(tmp)
                 model = out / name
