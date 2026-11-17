@@ -1,0 +1,3 @@
+schedule,stage0,handoff,stage1,latency,interval
+direct,32,1,16,49,34
+overlapped,17,1,9,27,19

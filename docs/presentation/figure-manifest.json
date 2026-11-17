@@ -1,0 +1,53 @@
+{
+  "source": "execution.json",
+  "sourceSHA256": "8aaa43798ae9d82995187672bf8be6c946a06d6e6c2755557c2c66151f42abae",
+  "generator": "figure.py",
+  "generatorSHA256": "40912ee03e529fe075696fefa689ceb3a4798a8001ebddad3ae7feccc1fadad5",
+  "matplotlib": "3.11.2",
+  "data": [
+    {
+      "schedule": "direct",
+      "stage0": 32,
+      "handoff": 1,
+      "stage1": 16,
+      "latency": 49,
+      "interval": 34
+    },
+    {
+      "schedule": "overlapped",
+      "stage0": 17,
+      "handoff": 1,
+      "stage1": 9,
+      "latency": 27,
+      "interval": 19
+    }
+  ],
+  "encoding": "Zero-based common linear clock scale. Stage rectangles show manifest accounting; simulation independently checks first-output latency and sustained interval. No smoothing, aggregation, normalization or uncertainty interval.",
+  "fonts": [
+    "DejaVu Sans",
+    "Arial",
+    "sans-serif"
+  ],
+  "outputs": [
+    {
+      "path": "schedule.svg",
+      "bytes": 14910,
+      "sha256": "ced7271a89399b10d52a39d24eaafe60b178fecc5caf2fa7f455f1f26493bfd0"
+    },
+    {
+      "path": "schedule.png",
+      "bytes": 123075,
+      "sha256": "bb93947e58aca0ea18d6e14d1058b464835d71810334cd0593012c032585a69d"
+    },
+    {
+      "path": "schedule-mobile.svg",
+      "bytes": 15459,
+      "sha256": "5223cbf0a062ee6f54a4510b93e3f3ad3fdab6c0edfcc7064f755c6b1acd765a"
+    },
+    {
+      "path": "schedule-mobile.png",
+      "bytes": 72054,
+      "sha256": "4db7dba2f3c645dfbc7aae56b90791932e7be14bb48dfc685c8e6dd63b5fc391"
+    }
+  ]
+}
