@@ -6,7 +6,12 @@ Choose fixed-point arithmetic and a hardware schedule, verify the generated circ
 
 [Open recorded designs](https://nazeeh111.github.io/SILICONPILOT/) · [Generate your first Verilog](#generate-your-first-verilog-without-installing) · [Arithmetic contract](docs/arithmetic.md)
 
-<p align="center"><img src="docs/media/observatory.png" alt="Genuine Hardware Design Observatory displaying compiled candidates and their verification evidence" width="100%"></p>
+<picture>
+  <source media="(max-width: 600px)" srcset="docs/presentation/schedule-mobile.png">
+  <img src="docs/presentation/schedule.png" alt="Clock allocation for the same 4-to-8-to-2 fixed-point classifier: a one-lane direct schedule produces its first output after 49 core clocks and subsequent outputs every 34 clocks; a two-lane registered-product schedule uses 27 and 19 clocks. Both pass the same 78 synthetic vectors through the core and serial shell. No physical hardware measurement is shown.">
+</picture>
+
+One model becomes two actual Verilog circuits. The same quantized weights and 78 boundary/seeded vectors pass bit-for-bit through both. The two-lane registered circuit also synthesizes to **1,596 LUT4 equivalents, 585 flip-flops and 4 DSPs** in a fresh ECP5 mapping. These are **RTL simulation and synthesis results**, separate from the older routed corpus below. [Read the executed case, inspect the generated RTL, or download and reopen its verification bundle](docs/presentation/README.md).
 
 The source checkout identifies itself as **0.1.1.dev0** and contains the updated
 pipeline schedule. The published [v0.1.0 release](https://github.com/nazeeh111/SILICONPILOT/releases/tag/v0.1.0)
@@ -44,6 +49,8 @@ the check does not guard against concurrent path changes.
 - **Real circuits.** Deterministic HDL, quantized weights, manifests, independent integer-reference testbenches, ECP5 synthesis and device-level place-and-route. All core tools are free and run locally on a CPU.
 - **A measured search problem.** A random-forest cost surrogate, approximate uncertainty, two evaluation fidelities, live hardware search, and a standard Gaussian-process search baseline. Finite-corpus replays use the actual measured compilation costs.
 - **An inspectable application.** Configure hardware budgets, select candidates on the Pareto plot, inspect the model/dataflow, read generated HDL and verification evidence, and replay genuine VCD waveforms. Local mode compiles and verifies through the same Python core as the CLI.
+
+<p align="center"><img src="docs/media/observatory.png" alt="Genuine Hardware Design Observatory displaying compiled candidates and their verification evidence" width="100%"></p>
 
 The camera-sensor demonstration uses four precomputed UCI Banknote Authentication wavelet features. Hardware accepts standardized features, not camera frames. Accuracy search uses validation rows. Test rows are kept separate. See the [dataset protocol](docs/dataset.md).
 

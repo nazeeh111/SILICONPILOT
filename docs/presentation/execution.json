@@ -1,0 +1,275 @@
+{
+  "sourceCommit": "6e2bbbe2faca1f10eb4a2a1e71a8aa858c56ffd1",
+  "date": "2026-11-17",
+  "scope": "Fresh RTL simulation and synthesis only. No routing, timing signoff or physical hardware. Both choices use the current compiler, not a historical-before/current-after comparison.",
+  "cases": {
+    "direct": {
+      "manifest": {
+        "schema_version": 1,
+        "compiler_version": "0.1.1.dev0",
+        "model_name": "banknote_4x8x2",
+        "config": {
+          "bits": 8,
+          "fractional_bits": 5,
+          "accumulator_bits": 24,
+          "parallelism": 1,
+          "pipeline": false,
+          "buffering": 1
+        },
+        "dimensions": [
+          4,
+          8,
+          2
+        ],
+        "top": "siliconpilot_top",
+        "core_top": "siliconpilot_core",
+        "target": {
+          "family": "ECP5",
+          "device": "LFE5U-25F",
+          "package": "CABGA256",
+          "speed": "6"
+        },
+        "latency_cycles": 49,
+        "initiation_interval_cycles": 34,
+        "stage_compute_cycles": [
+          32,
+          16
+        ],
+        "latency_scope": "core input handshake to output-valid, empty pipeline, no backpressure; streaming shell serialization excluded",
+        "rtl_sha256": "cead8f51917570d6d8613e480994b808b4c23fc608223cf2dc1ec21e6f2245c1",
+        "model_sha256": "aa76f9dd3484b9453e97719de2284edcb9400c2b78f41b8b9e2d99bd04dd2f53",
+        "arithmetic": {
+          "input_quantization": "round-to-nearest ties-to-even; signed saturation",
+          "weights": "round-to-nearest ties-to-even; signed saturation",
+          "bias": "round-to-nearest ties-to-even at 2F; modular wrap A",
+          "accumulation": "signed modular A-bit sum",
+          "requantization": "arithmetic right shift F (floor), then signed saturation",
+          "reset": "synchronous active high; abort all queued/in-flight work",
+          "handshake": "valid/ready; output stable while stalled"
+        },
+        "schedule_revision": "overlapped-products-v2",
+        "stage_schedules": [
+          {
+            "multiplier_lanes": 1,
+            "groups_per_neuron": 4,
+            "product_delay_cycles": 0,
+            "group_issue_interval_cycles": 1,
+            "compute_cycles": 32
+          },
+          {
+            "multiplier_lanes": 1,
+            "groups_per_neuron": 8,
+            "product_delay_cycles": 0,
+            "group_issue_interval_cycles": 1,
+            "compute_cycles": 16
+          }
+        ]
+      },
+      "verification": {
+        "schema_version": 1,
+        "passed": true,
+        "samples": 78,
+        "boundary_and_random_samples": 78,
+        "dataset_samples": 0,
+        "latency_cycles": 49,
+        "tests": [
+          "integer bit equality",
+          "boundary values",
+          "seeded random values",
+          "output stability under backpressure",
+          "reset with in-flight input and stalled completed output",
+          "packed core handshake",
+          "streaming shell handshake and score ordering",
+          "continuous-traffic core latency and output interval"
+        ],
+        "simulator": "Icarus Verilog version 14.0 (devel) (s20260301-670-g2b8d42dc0-dirty)",
+        "results": {
+          "core": {
+            "passed": true,
+            "samples": 78,
+            "simulation_cycles": 2670,
+            "backpressure_cycles": 54,
+            "first_latency_cycles": 49,
+            "reset_assertion_checks": 7,
+            "waveform": "waveform.vcd",
+            "log": "core.log"
+          },
+          "streaming": {
+            "passed": true,
+            "samples": 78,
+            "simulation_cycles": 2678,
+            "backpressure_cycles": 54,
+            "first_latency_cycles": 50,
+            "reset_assertion_checks": 7,
+            "waveform": "streaming.vcd",
+            "log": "streaming.log"
+          },
+          "schedule": {
+            "passed": true,
+            "samples": 12,
+            "latency_cycles": 49,
+            "initiation_interval_cycles": 34,
+            "log": "schedule.log",
+            "scope": "continuous core input, always-ready output; every consecutive output interval and post-drain silence checked"
+          }
+        },
+        "rtl_sha256": "cead8f51917570d6d8613e480994b808b4c23fc608223cf2dc1ec21e6f2245c1",
+        "schedule_revision": "overlapped-products-v2",
+        "initiation_interval_cycles": 34
+      },
+      "coreLog": "\nVCD info: dumpfile waveform.vcd opened for output.\nRESULT 0 57\nRESULT 1 50\nRESULT 2 49\nRESULT 3 49\nRESULT 4 51\nRESULT 5 53\nRESULT 6 49\nRESULT 7 50\nRESULT 8 49\nRESULT 9 49\nRESULT 10 49\nRESULT 11 49\nRESULT 12 49\nRESULT 13 49\nRESULT 14 49\nRESULT 15 50\nRESULT 16 51\nRESULT 17 50\nRESULT 18 49\nRESULT 19 49\nRESULT 20 49\nRESULT 21 50\nRESULT 22 49\nRESULT 23 49\nRESULT 24 49\nRESULT 25 49\nRESULT 26 57\nRESULT 27 49\nRESULT 28 49\nRESULT 29 49\nRESULT 30 51\nRESULT 31 50\nRESULT 32 49\nRESULT 33 51\nRESULT 34 52\nRESULT 35 49\nRESULT 36 50\nRESULT 37 49\nRESULT 38 49\nRESULT 39 49\nRESULT 40 49\nRESULT 41 49\nRESULT 42 51\nRESULT 43 49\nRESULT 44 50\nRESULT 45 49\nRESULT 46 49\nRESULT 47 50\nRESULT 48 49\nRESULT 49 49\nRESULT 50 49\nRESULT 51 49\nRESULT 52 49\nRESULT 53 49\nRESULT 54 49\nRESULT 55 49\nRESULT 56 49\nRESULT 57 50\nRESULT 58 49\nRESULT 59 51\nRESULT 60 49\nRESULT 61 49\nRESULT 62 50\nRESULT 63 49\nRESULT 64 51\nRESULT 65 49\nRESULT 66 49\nRESULT 67 49\nRESULT 68 50\nRESULT 69 49\nRESULT 70 49\nRESULT 71 52\nRESULT 72 49\nRESULT 73 51\nRESULT 74 49\nRESULT 75 49\nRESULT 76 49\nRESULT 77 49\nPASS samples=78 cycles=2670 stalls=54 first_latency=49 reset_checks=7\ntb_core.v:60: $finish called at 27425000 (1ps)\n",
+      "streamingLog": "\nVCD info: dumpfile streaming.vcd opened for output.\nPASS samples=78 cycles=2678 stalls=54 first_latency=50 reset_checks=7\ntb_streaming.v:61: $finish called at 27545000 (1ps)\n",
+      "scheduleLog": "\nSCHEDULE_PASS samples=12 latency=49 interval=34\ntb_schedule.v:51: $finish called at 5125000 (1ps)\n"
+    },
+    "overlapped": {
+      "manifest": {
+        "schema_version": 1,
+        "compiler_version": "0.1.1.dev0",
+        "model_name": "banknote_4x8x2",
+        "config": {
+          "bits": 8,
+          "fractional_bits": 5,
+          "accumulator_bits": 24,
+          "parallelism": 2,
+          "pipeline": true,
+          "buffering": 1
+        },
+        "dimensions": [
+          4,
+          8,
+          2
+        ],
+        "top": "siliconpilot_top",
+        "core_top": "siliconpilot_core",
+        "target": {
+          "family": "ECP5",
+          "device": "LFE5U-25F",
+          "package": "CABGA256",
+          "speed": "6"
+        },
+        "latency_cycles": 27,
+        "initiation_interval_cycles": 19,
+        "stage_compute_cycles": [
+          17,
+          9
+        ],
+        "latency_scope": "core input handshake to output-valid, empty pipeline, no backpressure; streaming shell serialization excluded",
+        "rtl_sha256": "8c85d0a5d944e0336cce601ae00f4e40fd6f35d6a8fcba7c9f841fcfaf23c50b",
+        "model_sha256": "aa76f9dd3484b9453e97719de2284edcb9400c2b78f41b8b9e2d99bd04dd2f53",
+        "arithmetic": {
+          "input_quantization": "round-to-nearest ties-to-even; signed saturation",
+          "weights": "round-to-nearest ties-to-even; signed saturation",
+          "bias": "round-to-nearest ties-to-even at 2F; modular wrap A",
+          "accumulation": "signed modular A-bit sum",
+          "requantization": "arithmetic right shift F (floor), then signed saturation",
+          "reset": "synchronous active high; abort all queued/in-flight work",
+          "handshake": "valid/ready; output stable while stalled"
+        },
+        "schedule_revision": "overlapped-products-v2",
+        "stage_schedules": [
+          {
+            "multiplier_lanes": 2,
+            "groups_per_neuron": 2,
+            "product_delay_cycles": 1,
+            "group_issue_interval_cycles": 1,
+            "compute_cycles": 17
+          },
+          {
+            "multiplier_lanes": 2,
+            "groups_per_neuron": 4,
+            "product_delay_cycles": 1,
+            "group_issue_interval_cycles": 1,
+            "compute_cycles": 9
+          }
+        ]
+      },
+      "verification": {
+        "schema_version": 1,
+        "passed": true,
+        "samples": 78,
+        "boundary_and_random_samples": 78,
+        "dataset_samples": 0,
+        "latency_cycles": 27,
+        "tests": [
+          "integer bit equality",
+          "boundary values",
+          "seeded random values",
+          "output stability under backpressure",
+          "reset with in-flight input and stalled completed output",
+          "packed core handshake",
+          "streaming shell handshake and score ordering",
+          "continuous-traffic core latency and output interval"
+        ],
+        "simulator": "Icarus Verilog version 14.0 (devel) (s20260301-670-g2b8d42dc0-dirty)",
+        "results": {
+          "core": {
+            "passed": true,
+            "samples": 78,
+            "simulation_cycles": 1493,
+            "backpressure_cycles": 48,
+            "first_latency_cycles": 27,
+            "reset_assertion_checks": 7,
+            "waveform": "waveform.vcd",
+            "log": "core.log"
+          },
+          "streaming": {
+            "passed": true,
+            "samples": 78,
+            "simulation_cycles": 1499,
+            "backpressure_cycles": 70,
+            "first_latency_cycles": 28,
+            "reset_assertion_checks": 7,
+            "waveform": "streaming.vcd",
+            "log": "streaming.log"
+          },
+          "schedule": {
+            "passed": true,
+            "samples": 12,
+            "latency_cycles": 27,
+            "initiation_interval_cycles": 19,
+            "log": "schedule.log",
+            "scope": "continuous core input, always-ready output; every consecutive output interval and post-drain silence checked"
+          }
+        },
+        "rtl_sha256": "8c85d0a5d944e0336cce601ae00f4e40fd6f35d6a8fcba7c9f841fcfaf23c50b",
+        "schedule_revision": "overlapped-products-v2",
+        "initiation_interval_cycles": 19
+      },
+      "coreLog": "\nVCD info: dumpfile waveform.vcd opened for output.\nRESULT 0 30\nRESULT 1 27\nRESULT 2 28\nRESULT 3 27\nRESULT 4 27\nRESULT 5 27\nRESULT 6 31\nRESULT 7 29\nRESULT 8 27\nRESULT 9 27\nRESULT 10 27\nRESULT 11 30\nRESULT 12 27\nRESULT 13 27\nRESULT 14 27\nRESULT 15 27\nRESULT 16 27\nRESULT 17 29\nRESULT 18 27\nRESULT 19 27\nRESULT 20 27\nRESULT 21 33\nRESULT 22 27\nRESULT 23 27\nRESULT 24 28\nRESULT 25 27\nRESULT 26 28\nRESULT 27 27\nRESULT 28 28\nRESULT 29 27\nRESULT 30 27\nRESULT 31 27\nRESULT 32 27\nRESULT 33 27\nRESULT 34 27\nRESULT 35 27\nRESULT 36 27\nRESULT 37 27\nRESULT 38 27\nRESULT 39 30\nRESULT 40 27\nRESULT 41 27\nRESULT 42 27\nRESULT 43 27\nRESULT 44 27\nRESULT 45 27\nRESULT 46 27\nRESULT 47 27\nRESULT 48 29\nRESULT 49 29\nRESULT 50 27\nRESULT 51 27\nRESULT 52 27\nRESULT 53 28\nRESULT 54 29\nRESULT 55 27\nRESULT 56 27\nRESULT 57 28\nRESULT 58 27\nRESULT 59 27\nRESULT 60 27\nRESULT 61 27\nRESULT 62 30\nRESULT 63 27\nRESULT 64 27\nRESULT 65 27\nRESULT 66 28\nRESULT 67 31\nRESULT 68 28\nRESULT 69 30\nRESULT 70 27\nRESULT 71 27\nRESULT 72 27\nRESULT 73 27\nRESULT 74 27\nRESULT 75 27\nRESULT 76 28\nRESULT 77 27\nPASS samples=78 cycles=1493 stalls=48 first_latency=27 reset_checks=7\ntb_core.v:60: $finish called at 15435000 (1ps)\n",
+      "streamingLog": "\nVCD info: dumpfile streaming.vcd opened for output.\nPASS samples=78 cycles=1499 stalls=70 first_latency=28 reset_checks=7\ntb_streaming.v:61: $finish called at 15535000 (1ps)\n",
+      "scheduleLog": "\nSCHEDULE_PASS samples=12 latency=27 interval=19\ntb_schedule.v:51: $finish called at 2885000 (1ps)\n"
+    }
+  },
+  "sameInputVectors": true,
+  "sameExpectedOutputs": true,
+  "inputVectorsSHA256": "01a3205dc17ba074f8d85c66cc94a5e9c7ffe89504d94ac5d29cf63838063800",
+  "expectedOutputsSHA256": "dbcb47c1c864ceba1f63be1e2993ef16f3d0696f0055aef227a468080bf4cbf8",
+  "mappedOverlapped": {
+    "rtl_sha256": "8c85d0a5d944e0336cce601ae00f4e40fd6f35d6a8fcba7c9f841fcfaf23c50b",
+    "lut": 1596,
+    "logic_lut": 784,
+    "carry_lut": 812,
+    "ff": 585,
+    "dsp": 4,
+    "bram": 0,
+    "routed": false,
+    "tool_versions": {
+      "yosys": "Yosys 0.70+219 (git sha1 5053d0e26, Release, Clang /usr/local/osxcross/target/bin/aarch64-apple-darwin25.5-clang++ 21.1.8)"
+    },
+    "cell_counts": {
+      "$scopeinfo": 3,
+      "TRELLIS_FF": 585,
+      "LUT4": 784,
+      "PFUMX": 84,
+      "CCU2C": 406,
+      "L6MUX21": 2,
+      "MULT18X18D": 4
+    },
+    "measurement_scope": "core simulated cycle model; Yosys mapped cells; nextpnr device timing estimate when routed. No physical FPGA measurement."
+  },
+  "extractedBundleRecompiledAndPassed": true,
+  "negativeControlRejected": true,
+  "negativeControl": "core RTL verification failed: VCD info: dumpfile waveform.vcd opened for output.\nMISMATCH sample=0 got=07f8 expected=f10e\nFATAL: tb_core.v:53: \n       Time: 835000  Scope: tb\n ",
+  "bundleSHA256": "c412cde4a1dec54ef69a2df56bb96e41856c117784327cf60129f79071fcf4ed",
+  "python": "3.14.7"
+}
