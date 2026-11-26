@@ -10,6 +10,7 @@ import shutil
 import subprocess
 from .compiler import compile_model
 from .model import HardwareConfig, quantize
+from .process import run_command, timeout_log
 
 
 def prove_tiny(output_dir: str | Path, *, pipeline: bool = False) -> dict:
@@ -73,7 +74,11 @@ endmodule
     depth=manifest['latency_cycles']+7
     script=f'read_verilog -formal -sv design.v formal_harness.v; prep -top formal_harness -flatten; memory_map; opt; async2sync; chformal -lower; sat -verify -prove-asserts -seq {depth} -set-init-zero -set rst 0 -set-at 1 rst 1 -show-inputs -show-outputs'
     (directory/'proof.ys').write_text(script+'\n')
-    proc=subprocess.run([yosys,'-Q','-T','-s','proof.ys'],cwd=directory,text=True,capture_output=True,timeout=180)
+    try:
+        proc=run_command([yosys,'-Q','-T','-s','proof.ys'],directory,180)
+    except subprocess.TimeoutExpired as exc:
+        (directory/'formal.log').write_text(timeout_log(exc))
+        raise
     log=proc.stdout+proc.stderr
     (directory/'formal.log').write_text(log)
     success=proc.returncode==0 and 'SUCCESS' in log

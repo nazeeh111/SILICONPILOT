@@ -15,6 +15,7 @@ import shutil
 import subprocess
 import time
 from typing import Any
+from .process import run_command, timeout_log
 
 # These cells have executable upstream models in techlibs/ecp5/cells_sim.v
 # and its included common_sim.vh and ccu2c_sim.vh. Never read cells_bb.v:
@@ -28,9 +29,9 @@ def _hash(path: Path) -> str:
 
 def _run(command: list[str], directory: Path, log: str, timeout: int = 240) -> str:
     try:
-        result = subprocess.run(command, cwd=directory, text=True, capture_output=True, timeout=timeout)
+        result = run_command(command, directory, timeout)
     except subprocess.TimeoutExpired as exc:
-        (directory / log).write_text(str(exc))
+        (directory / log).write_text(timeout_log(exc))
         raise RuntimeError(f"Netlist verification timed out; see {directory / log}") from exc
     output = result.stdout + result.stderr
     (directory / log).write_text(output)
