@@ -9,14 +9,15 @@ from pathlib import Path
 from typing import Any, Mapping
 from .compiler import compile_model
 from .model import HardwareConfig
+from .process import run_command, timeout_log
 
 
 def _run(command: list[str], directory: Path, log: str, timeout: int = 600) -> float:
     started = time.perf_counter()
     try:
-        result = subprocess.run(command, cwd=directory, capture_output=True, text=True, timeout=timeout)
+        result = run_command(command, directory, timeout)
     except subprocess.TimeoutExpired as exc:
-        (directory / log).write_text(str(exc))
+        (directory / log).write_text(timeout_log(exc))
         raise RuntimeError(f'{command[0]} exceeded {timeout}s; see {directory / log}') from exc
     (directory / log).write_text(result.stdout + result.stderr)
     if result.returncode:

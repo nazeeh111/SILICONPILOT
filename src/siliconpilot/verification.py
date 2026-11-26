@@ -5,6 +5,7 @@ import random
 import re
 import shutil
 import subprocess
+from .process import run_command, timeout_log
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 from .compiler import compile_model
@@ -181,9 +182,9 @@ def _simulate(directory: Path, name: str, testbench: str, iverilog: str, vvp: st
     output = []
     for command in commands:
         try:
-            proc = subprocess.run(command,cwd=directory,text=True,capture_output=True,timeout=180)
+            proc = run_command(command,directory,180)
         except subprocess.TimeoutExpired as exc:
-            (directory/f'{name}.log').write_text('\n'.join(output) + '\n' + str(exc))
+            (directory/f'{name}.log').write_text('\n'.join(output) + '\n' + timeout_log(exc))
             raise RuntimeError(f'{name} RTL verification timed out; see {name}.log') from exc
         output.append(proc.stdout+proc.stderr)
         (directory/f'{name}.log').write_text('\n'.join(output))

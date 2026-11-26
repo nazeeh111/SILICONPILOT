@@ -144,6 +144,8 @@ pytest -q
 
 Compilation and routing cost depend on the CPU, concurrency, candidate and routing seed. A live tool invocation can overrun its time budget; it is reported and no further invocation starts. Search replays charge measured synthesis and routing time but report acquisition CPU time separately. They do not imply a live speedup. The first release uses one dataset, one FPGA and small networks, with two held-out hidden widths.
 
+On POSIX hosts, a stage timeout or keyboard interruption stops the invocation's own process group for synthesis, routing, RTL simulation, mapped-netlist checks and bounded proofs. Timeout logs retain the available tool diagnostics. This does not turn the soft search budget into a hard deadline or contain a worker that deliberately starts a separate session; non-POSIX hosts retain direct-child cleanup.
+
 ## Architecture
 
 ```mermaid
