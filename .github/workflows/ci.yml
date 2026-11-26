@@ -27,7 +27,9 @@ jobs:
           python -m pip install --no-deps -e .
       - name: Run contract, arithmetic, protocol and formal tests
         run: pytest -q
-      - name: Check browser application syntax
-        run: node --check observatory/app.js
+      - name: Check browser syntax and compiler result ownership
+        run: |
+          node --check observatory/app.js
+          node --test tests/test_local_compiler_ui.mjs
       - name: Independently verify, synthesize and route a real model
         run: siliconpilot build models/banknote_4x8x2.json --out work/ci-ecp5 --dataset

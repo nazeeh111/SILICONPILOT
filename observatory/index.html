@@ -36,7 +36,7 @@
     </header>
     <div class="workspace">
       <aside class="rail" aria-label="Sections">
-        <a class="rail-active" href="#main" aria-label="Design space"
+        <a class="rail-active" href="#design-space" aria-label="Design space"
           ><svg viewBox="0 0 24 24">
             <path
               d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"
@@ -50,13 +50,73 @@
         ><span class="rail-label">ECP5 / OPEN TOOLCHAIN</span>
       </aside>
       <main id="main">
-        <section class="heading">
+        <section id="schedule-case" class="schedule-case" aria-labelledby="schedule-heading" tabindex="-1">
+          <header class="schedule-intro">
+            <div>
+              <h1 id="schedule-heading">One classifier, two circuits</h1>
+              <p>Compare two ways to schedule the same 48 weights in a 4 → 8 → 2 fixed-point classifier.</p>
+            </div>
+            <a class="schedule-jump" href="#design-space">Explore the 40 routed designs ↓</a>
+          </header>
+          <figure class="schedule-comparison">
+            <figcaption>
+              <h2>Core clocks to first output</h2>
+              <p>Both circuits passed the same 78 synthetic vectors in core and serial-shell RTL simulation.</p>
+            </figcaption>
+            <div class="schedule-axis" aria-hidden="true"><span>0</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span></div>
+            <div class="schedule-row" data-design="direct" style="--first: 32; --handoff: 1; --last: 16">
+              <div class="schedule-row-title"><h3>1 lane · direct products</h3><strong data-measure="latency">49 clocks</strong></div>
+              <div class="schedule-track" aria-hidden="true"><span></span><span></span><span></span></div>
+              <dl class="schedule-measures">
+                <div><dt>Dense 4 → 8</dt><dd data-measure="first">32</dd></div>
+                <div><dt>Handoff</dt><dd data-measure="handoff">1</dd></div>
+                <div><dt>Dense 8 → 2</dt><dd data-measure="last">16</dd></div>
+                <div><dt>Output interval</dt><dd data-measure="interval">34 clocks</dd></div>
+              </dl>
+            </div>
+            <div class="schedule-row" data-design="overlapped" style="--first: 17; --handoff: 1; --last: 9">
+              <div class="schedule-row-title"><h3>2 lanes · registered products</h3><strong data-measure="latency">27 clocks</strong></div>
+              <div class="schedule-track" aria-hidden="true"><span></span><span></span><span></span></div>
+              <dl class="schedule-measures">
+                <div><dt>Dense 4 → 8</dt><dd data-measure="first">17</dd></div>
+                <div><dt>Handoff</dt><dd data-measure="handoff">1</dd></div>
+                <div><dt>Dense 8 → 2</dt><dd data-measure="last">9</dd></div>
+                <div><dt>Output interval</dt><dd data-measure="interval">19 clocks</dd></div>
+              </dl>
+            </div>
+            <p class="schedule-scope">Stage lengths use manifest clock accounting. RTL simulation checks first output and sustained interval at the core ports, excluding serial I/O and stalls.</p>
+          </figure>
+          <div class="schedule-source">
+            <details class="schedule-hdl">
+              <summary>Read HDL · 1 lane</summary>
+              <div class="schedule-reader">
+                <a href="data/schedule-case/direct/design.v" download="direct-design.v">Download Verilog</a>
+                <p class="schedule-hdl-status" role="status"></p>
+                <button class="text-button schedule-hdl-retry" type="button" hidden>Retry HDL</button>
+                <pre class="code" tabindex="0" aria-label="Generated Verilog for 1 lane" hidden><code></code></pre>
+              </div>
+            </details>
+            <details class="schedule-hdl">
+              <summary>Read HDL · 2 lanes</summary>
+              <div class="schedule-reader">
+                <a href="data/schedule-case/overlapped/design.v" download="overlapped-design.v">Download Verilog</a>
+                <p class="schedule-hdl-status" role="status"></p>
+                <button class="text-button schedule-hdl-retry" type="button" hidden>Retry HDL</button>
+                <pre class="code" tabindex="0" aria-label="Generated Verilog for 2 lanes" hidden><code></code></pre>
+              </div>
+            </details>
+          </div>
+          <p class="schedule-receipt">
+            <a href="https://github.com/nazeeh111/SILICONPILOT/blob/main/docs/presentation/README.md">Executed case and verification bundle</a>
+            <span><a href="data/schedule-case/LICENSE">Apache-2.0</a> · <a href="data/schedule-case/THIRD_PARTY.md">Third-party notices</a></span>
+          </p>
+        </section>
+        <section id="design-space" class="heading" aria-labelledby="design-space-heading" tabindex="-1">
           <div>
-            <p class="eyebrow">ML → CIRCUITS → EVIDENCE</p>
-            <h1>Find the hardware<br />your model deserves.</h1>
+            <h2 id="design-space-heading">Routed design archive</h2>
             <p class="lede">
-              Explore the cost of every design decision. Each point is a real
-              compiled accelerator with inspectable verification evidence.
+              Filter 40 ECP5 designs by accuracy, latency or LUT4 budget. These
+              recorded measurements use the earlier alternating product schedule.
             </p>
           </div>
           <div class="experiment-meta">
@@ -129,10 +189,14 @@
                 </select></label
               >
             </div>
+            <p class="plot-scroll-hint" id="pareto-scroll-hint">Scroll the plot sideways, or <a href="#candidate-select">choose a design by ID</a>.</p>
             <div
               id="pareto-chart"
               class="chart-wrap"
-              aria-label="Selectable accelerator design chart"
+              role="region"
+              tabindex="0"
+              aria-describedby="pareto-scroll-hint"
+              aria-label="Design tradeoff plot"
             ></div>
             <div class="plot-caption">
               <span id="plot-caption"
@@ -235,7 +299,7 @@
               </div>
               <span class="tag" id="history-count">— EVALUATIONS</span>
             </div>
-            <div id="history-chart" class="history-chart"></div>
+            <div id="history-chart" class="history-chart" role="region" tabindex="0" aria-label="Recorded search results chart"></div>
             <p id="history-note" class="muted history-note">
               Actual evaluated designs in recorded order. Search comparisons are
               reported in the reproducible benchmark artifacts.
@@ -324,7 +388,7 @@
               ><button id="copy-hdl" class="text-button">Copy HDL</button>
             </div>
             <pre
-              class="code"
+              class="code" tabindex="0" aria-label="Candidate Verilog source"
             ><code id="hdl-code">Select a measured design.</code></pre>
           </div>
           <div

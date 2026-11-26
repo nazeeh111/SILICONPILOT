@@ -4,7 +4,7 @@
 
 Choose fixed-point arithmetic and a hardware schedule, verify the generated circuit, and compare measured ECP5 implementation costs. The local observatory connects each design to its HDL, waveforms and evidence.
 
-[Open recorded designs](https://nazeeh111.github.io/SILICONPILOT/) · [Generate your first Verilog](#generate-your-first-verilog-without-installing) · [Arithmetic contract](docs/arithmetic.md)
+[Compare the two circuits in the live explorer](https://nazeeh111.github.io/SILICONPILOT/#schedule-case) · [Browse the routed design archive](https://nazeeh111.github.io/SILICONPILOT/#design-space) · [Generate your first Verilog](#generate-your-first-verilog-without-installing) · [Arithmetic contract](docs/arithmetic.md)
 
 <picture>
   <source media="(max-width: 600px)" srcset="docs/presentation/schedule-mobile.png">

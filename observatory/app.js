@@ -202,6 +202,9 @@ function renderSummary() {
 function renderPareto() {
   const wrap = $("pareto-chart"),
     cs = current().filter((c) => finite(c[state.axis]) && finite(c.accuracy));
+  const focusedId = wrap.contains(document.activeElement)
+    ? document.activeElement.dataset.candidate
+    : null;
   wrap.replaceChildren();
   if (!cs.length) {
     wrap.innerHTML = empty(
@@ -231,6 +234,8 @@ function renderPareto() {
     H,
     "Measured hardware accuracy and cost. Use Tab to focus a candidate and Enter to inspect it.",
   );
+  root.setAttribute("role", "group");
+  let focusedPoint;
   for (let i = 0; i <= 4; i++) {
     const vx = xmin + ((xmax - xmin) * i) / 4,
       vy = ymin + ((ymax - ymin) * i) / 4;
@@ -317,6 +322,7 @@ function renderPareto() {
       stroke: selected ? "#202927" : "#fbfaf6",
       "stroke-width": selected ? 2 : 1.5,
       class: "plot-point",
+      "data-candidate": c.id,
       tabindex: 0,
       role: "button",
       "aria-label": `${c.id}, ${pct(c.accuracy)} accuracy, ${number(c.latency_us, 2)} microseconds, ${number(c.lut, 0)} LUT4${selected ? ", selected" : ""}`,
@@ -337,6 +343,7 @@ function renderPareto() {
       }
     });
     root.append(point);
+    if (c.id === focusedId) focusedPoint = point;
     if (selected) {
       const tx = x(Number(c[state.axis])),
         ty = y(accuracy(c.accuracy) * 100);
@@ -358,6 +365,7 @@ function renderPareto() {
     }
   });
   wrap.append(root);
+  focusedPoint?.focus({ preventScroll: true });
   $("plot-caption").textContent =
     `${cs.length} measured designs · ${front.length} non-dominated on displayed axes within budget`;
 }
@@ -1328,10 +1336,47 @@ $("wave-play").addEventListener("click", () => {
   }, 100);
 });
 window.addEventListener("pagehide", stopWave);
+
+for (const details of document.querySelectorAll(".schedule-hdl")) {
+  const download = details.querySelector("a[download]");
+  const status = details.querySelector(".schedule-hdl-status");
+  const retry = details.querySelector(".schedule-hdl-retry");
+  const reader = details.querySelector("pre");
+  let loading = false;
+
+  async function loadHdl() {
+    if (!details.open || loading || !reader.hidden) return;
+    loading = true;
+    status.textContent = "Loading generated Verilog…";
+    try {
+      const response = await fetch(download.href);
+      if (!response.ok) throw Error(`HTTP ${response.status}`);
+      reader.firstElementChild.textContent = await response.text();
+      reader.hidden = false;
+      status.textContent = "";
+      if (document.activeElement === retry) reader.focus();
+      retry.hidden = true;
+    } catch {
+      status.textContent = "Verilog could not be loaded. Retry or use the download link.";
+      retry.hidden = false;
+    } finally {
+      loading = false;
+    }
+  }
+
+  details.addEventListener("toggle", loadHdl);
+  retry.addEventListener("click", loadHdl);
+  loadHdl();
+}
+
 load();
 
 // Local compilation is exposed only when the loopback server confirms its API.
+const localDialog = $("local-compile-dialog");
+const localForm = $("local-compile-form");
+const localResult = $("local-compile-result");
 let localBusy = false;
+let localViewVersion = 0;
 $("candidate-select").addEventListener("change", (e) =>
   selectCandidate(e.target.value),
 );
@@ -1346,6 +1391,14 @@ async function detectLocalCompiler() {
   } catch {
     /* Static hosting and ordinary HTTP preview intentionally have no compiler API. */
   }
+}
+function resetLocalResult() {
+  localViewVersion++;
+  localResult.classList.remove("error");
+  localResult.hidden = !localBusy;
+  localResult.textContent = localBusy
+    ? "A previous request is still running. You can prepare your settings while it finishes."
+    : "";
 }
 function openLocalCompiler() {
   const cfg = state.selected?.config || {
@@ -1374,15 +1427,19 @@ function openLocalCompiler() {
   ])
     $(id).value = cfg[key];
   $("compile-pipeline").checked = Boolean(cfg.pipeline);
-  $("local-compile-dialog").showModal();
+  resetLocalResult();
+  localDialog.showModal();
 }
 $("local-compile-toggle").addEventListener("click", openLocalCompiler);
-$("local-compile-close").addEventListener("click", () =>
-  $("local-compile-dialog").close(),
-);
-$("local-compile-form").addEventListener("submit", async (e) => {
+$("local-compile-close").addEventListener("click", () => localDialog.close());
+localForm.addEventListener("input", resetLocalResult);
+localForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (localBusy) return;
+  const viewVersion = localViewVersion;
+  const modelSelect = $("compile-model");
+  const modelId = modelSelect.value;
+  const modelName = modelSelect.selectedOptions[0]?.textContent || modelId;
   const config = {
     bits: Number($("compile-bits").value),
     fractional_bits: Number($("compile-fraction").value),
@@ -1391,7 +1448,7 @@ $("local-compile-form").addEventListener("submit", async (e) => {
     pipeline: $("compile-pipeline").checked,
     buffering: Number($("compile-buffering").value),
   };
-  const result = $("local-compile-result");
+  const result = localResult;
   result.hidden = false;
   result.classList.remove("error");
   if (
@@ -1414,17 +1471,18 @@ $("local-compile-form").addEventListener("submit", async (e) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model_id: $("compile-model").value,
+        model_id: modelId,
         config,
         verify: true,
         route: false,
       }),
     });
     const data = await r.json();
+    if (!localDialog.open || viewVersion !== localViewVersion) return;
     if (!r.ok) throw Error(data.error || data.message || `HTTP ${r.status}`);
     const passed = data.verification?.passed === true;
     result.classList.toggle("error", !passed);
-    result.innerHTML = `<strong>${passed ? "Fresh RTL verified." : "Compilation returned. Inspect verification."}</strong><div>${passed ? `${number(data.verification.samples, 0)} integer-reference test vectors passed.` : "Verification evidence is included in the response below."} This local job has not been synthesized or routed.</div>`;
+    result.innerHTML = `<strong>${passed ? "Fresh RTL verified." : "Compilation returned. Inspect verification."}</strong><div>${esc(modelName)} · ${config.parallelism} MAC ${config.parallelism === 1 ? "lane" : "lanes"} · ${config.pipeline ? "registered" : "direct"} products</div><div>${passed ? `${number(data.verification.samples, 0)} integer-reference test vectors passed.` : "Verification evidence is included in the response below."} This local job has not been synthesized or routed.</div>`;
     for (const [label, file] of [
       ["Generated HDL", "design.v"],
       ["Build manifest", "manifest.json"],
@@ -1447,10 +1505,15 @@ $("local-compile-form").addEventListener("submit", async (e) => {
     details.append(summary, pre);
     result.append(details);
   } catch (err) {
+    if (!localDialog.open || viewVersion !== localViewVersion) return;
     result.classList.add("error");
     result.textContent = `Local compilation failed: ${err.message}. Check the toolchain installation and retry. Full errors remain visible here.`;
   } finally {
     localBusy = false;
+    if (viewVersion !== localViewVersion) {
+      localResult.hidden = true;
+      localResult.textContent = "";
+    }
     $("local-compile-submit").disabled = false;
     $("local-compile-submit").innerHTML =
       "Generate HDL & simulate <span>→</span>";

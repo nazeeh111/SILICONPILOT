@@ -1564,4 +1564,210 @@ footer > a {
     font-size: 8px;
   }
 }
-@media(max-width:600px){.chart-wrap{overflow-x:auto}.chart-wrap svg{min-width:620px}.model-graph{overflow-x:auto}.model-graph svg{min-width:480px}}
+@media (max-width: 600px) {
+  .model-graph { overflow-x: auto; }
+  .model-graph svg { min-width: 480px; }
+}
+
+/* A worked schedule comparison, followed by the routed search archive. */
+.schedule-case {
+  margin-bottom: clamp(48px, 7vw, 96px);
+}
+.schedule-intro {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px 32px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.schedule-intro h1 {
+  margin-bottom: 12px;
+}
+.schedule-intro p {
+  margin: 0;
+  color: #48564d;
+  font-size: 15px;
+  line-height: 1.55;
+}
+.schedule-jump,
+.schedule-reader > a,
+.schedule-receipt a,
+.plot-scroll-hint a {
+  color: var(--green);
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: .23em;
+}
+.schedule-jump {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.schedule-comparison {
+  background: #202927;
+  color: #f8f6ed;
+  padding: clamp(18px, 3vw, 32px);
+  margin: 0;
+}
+.schedule-comparison h2 {
+  font-size: clamp(21px, 2.1vw, 29px);
+  margin: 0 0 6px;
+}
+.schedule-comparison p {
+  color: #d7e1d5;
+  line-height: 1.55;
+  margin: 0;
+}
+.schedule-axis {
+  display: flex;
+  justify-content: space-between;
+  margin: 24px 0 10px;
+  font: 13px var(--mono);
+  color: #c3d0c2;
+  font-variant-numeric: tabular-nums;
+}
+.schedule-row + .schedule-row {
+  margin-top: 24px;
+}
+.schedule-row-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-bottom: 7px;
+}
+.schedule-row-title h3 {
+  font-size: 15px;
+  margin: 0;
+}
+.schedule-row-title strong {
+  font: 650 17px var(--mono);
+  white-space: nowrap;
+}
+.schedule-track {
+  display: grid;
+  grid-template-columns: calc(var(--first) * 2%) calc(var(--handoff) * 2%) calc(var(--last) * 2%);
+  min-height: 20px;
+  background: repeating-linear-gradient(to right, #4c5c54 0 1px, #2c3934 1px 20%);
+}
+.schedule-track span:first-child { background: #8fbda2; }
+.schedule-track span:nth-child(2) { background: #f9d59b; }
+.schedule-track span:last-child { background: #dc987a; }
+.schedule-measures {
+  margin: 9px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: clamp(12px, 3vw, 28px);
+  row-gap: 6px;
+  font-size: 13px;
+}
+.schedule-measures div {
+  display: flex;
+  gap: 5px;
+  align-items: baseline;
+}
+.schedule-measures dt { color: #d7e1d5; }
+.schedule-measures dd {
+  margin: 0;
+  font: 650 13px var(--mono);
+}
+.schedule-comparison .schedule-scope {
+  border-top: 1px solid #57625a;
+  padding-top: 13px;
+  margin-top: 22px;
+  font-size: 13px;
+}
+.schedule-source {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  margin-top: 12px;
+  gap: 12px;
+}
+.schedule-hdl {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  min-width: 0;
+}
+.schedule-hdl summary {
+  cursor: pointer;
+  padding: 13px 16px;
+  min-height: 46px;
+  font-weight: 650;
+}
+.schedule-reader {
+  padding: 0 12px 12px;
+}
+.schedule-reader > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.schedule-reader .code {
+  font-size: 13px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.schedule-hdl-status:empty {
+  margin: 0;
+}
+.schedule-receipt {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 20px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+#design-space-heading {
+  font: 400 clamp(30px, 3vw, 44px)/1.1 Georgia, "Times New Roman", serif;
+  margin: 0 0 10px;
+}
+#design-space,
+#schedule-case {
+  scroll-margin-top: 14px;
+}
+#design-space:focus-visible,
+#schedule-case:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 5px;
+}
+.plot-scroll-hint {
+  display: none;
+  color: #48564d;
+  padding: 0 15px;
+}
+.chart-wrap,
+.history-chart {
+  overflow-x: auto;
+}
+.chart-wrap svg { min-width: 620px; }
+.history-chart svg { min-width: 460px; }
+.tick-label,
+.axis-label {
+  font-size: 13px;
+  fill: #526157;
+}
+.schedule-hdl summary:focus-visible,
+.schedule-reader .code:focus-visible,
+.chart-wrap:focus-visible,
+.history-chart:focus-visible,
+.tab-view .code:focus-visible {
+  outline: 2px solid #a3381c;
+  outline-offset: -3px;
+}
+@media (max-width: 1150px) {
+  .plot-scroll-hint { display: block; }
+}
+@media (max-width: 660px) {
+  .schedule-source { grid-template-columns: 1fr; }
+  .schedule-intro { gap: 8px; }
+  .schedule-intro h1 { font-size: 37px; }
+  .tab-view .code {
+    font-size: 13px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}
