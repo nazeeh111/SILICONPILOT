@@ -2,7 +2,7 @@
 
 This case was executed on 17 November 2026 against current main [`6e2bbbe`](https://github.com/nazeeh111/SILICONPILOT/tree/6e2bbbe2faca1f10eb4a2a1e71a8aa858c56ffd1). It follows the packaged model through quantization, generated RTL, independent integer-reference checking and one ECP5 synthesis. Both choices use the current compiler; this is not a historical backend before/after comparison.
 
-[Download actual generated circuits and verification artifacts](compiled-example.zip) · [Execution record](execution.json) · [Exact clock table](schedule.csv) · [Editable SVG](schedule.svg)
+[Compare the clocks and inspect the circuits in the explorer](https://nazeeh111.github.io/SILICONPILOT/#schedule-case) · [Download actual generated circuits and verification artifacts](compiled-example.zip) · [Execution record](execution.json) · [Exact clock table](schedule.csv) · [Editable SVG](schedule.svg)
 
 ## What changed, and what stayed equal
 
@@ -65,7 +65,7 @@ PYTHONPATH=src python3 -m siliconpilot.cli build models/banknote_4x8x2.json \
   --parallelism 2 --pipeline --synthesis-only --out work/mapped-proof
 ```
 
-No fresh place-and-route, routed timing, board, power or physical validation is claimed here. The released corpus uses the older alternating product schedule and is preserved unchanged. Its recorded costs cannot be assigned to newly generated RTL. See [recorded-design compatibility](../arithmetic.md#recorded-design-compatibility), [recorded observatory](https://nazeeh111.github.io/SILICONPILOT/), and [benchmark definitions and limits](../benchmarks.md).
+No fresh place-and-route, routed timing, board, power or physical validation is claimed here. The released corpus uses the older alternating product schedule and is preserved unchanged. Its recorded costs cannot be assigned to newly generated RTL. See [recorded-design compatibility](../arithmetic.md#recorded-design-compatibility), [routed design archive](https://nazeeh111.github.io/SILICONPILOT/#design-space), and [benchmark definitions and limits](../benchmarks.md).
 
 ## Figure source and provenance
 
